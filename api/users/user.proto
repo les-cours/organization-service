@@ -1,0 +1,289 @@
+syntax = "proto3";
+option go_package="github.com/les-cours/user-service/api/users";
+package users;
+
+message Empty {}
+
+
+/*
+    STUDENTS
+ */
+message Students {
+    repeated Student agents = 1;
+}
+message GetStudentsRequest{
+     string filterType = 1;
+     string filterValue = 2;
+}
+message GetStudentRequest {
+    string studentID = 2;
+}
+message StudentAddRequest {
+    string accountID = 1;
+    string studentID = 2;
+    string username = 3;
+    string password = 4;
+    string firstname = 5;
+    string lastname = 6;
+    string email = 7;
+    uint32 roleID = 8;
+    repeated string allowedIPS = 9;
+    repeated uint32 departments = 10;
+    string avatar = 11;
+    string defaultAvatar = 12;
+}
+message UpdateStudentStatusRequest {
+    string studentID= 1;
+    bool status = 2;
+}
+message StudentUpdateRequest {
+    string studentID = 1;
+    string username = 3;
+    string firstname = 4;
+    string lastname = 5;
+    string email = 6;
+    uint32 roleID = 7;
+}
+message DeleteStudentRequest {
+    string studentID = 1;
+}
+message MultiStudentsDeleteRequest{
+    repeated string studentIDs = 1;
+}
+message Student {
+    string id = 1;
+    string accountID = 2;
+    string username = 3;
+    string password = 4;
+    string firstname = 5;
+    string lastname = 6;
+    string email = 7;
+    Role role = 8;
+    repeated string allowedIPS = 9;
+    bool status = 11;
+    string avatar = 12;
+    bool notificationStatus = 13;
+    bool onlineStatus = 14;
+    string defaultAvatar = 15;
+}
+message UpdateStudentStatusResponse {
+    string studentID = 1;
+    bool status = 2;
+}
+message UserPasswordResetRequest{
+  string userID = 1;
+  string oldPassword = 2;
+  string newPassword = 3;
+}
+message StudentPasswordResetResponse{
+  bool success = 1;
+  string error = 2; 
+}
+message UpdateStudentOnlineStatusRequest{
+    string studentID = 1;
+    bool onlineStatus = 2;
+}
+message StudentSignupRequest {
+    string firstname = 1;
+    string lastname = 2;
+    string email = 3;
+    string password = 4;
+
+}
+message StudentSignupResponse {
+    bool succeeded = 1;
+    AccessToken accessToken = 2;
+    RefreshToken refreshToken = 3;
+    SignupToken signupToken = 4;
+}
+
+
+
+message GetUserByIDRequest {
+    string accountID = 1;
+}
+message User {
+        string id = 1;
+        string accountID= 2;
+        string username = 3;
+        string firstName = 4;
+        string lastName = 5;
+        string email = 6;
+        Plan plan = 8;
+        repeated string allowedIPS = 9;
+        string department = 10;
+        string avatar = 11;
+        Permissions Permissions = 12;
+        string userType = 13;
+}
+message GetUserRequest {
+    string username = 1;
+    string password = 2;
+    bool isTeacher = 3;
+}
+message ResetPasswordRequest {
+    string email = 1;
+}
+message ResetPasswordResponse {
+    string success = 1;
+    string error = 2;
+}
+message PasswordResetLinkHealthRequest {
+    string linkID = 1;
+}
+message PasswordResetLinkHealthResponse {
+    string error = 1;
+    bool dead = 2;
+}
+message PasswordChangeByLinkRequest {
+    string linkID = 1;
+    string password = 2;
+}
+message PasswordChangeByLinkResponse {
+    string error = 1;
+    string success = 2;
+}
+message DoesEmailExistRequest {
+    string type = 1;
+    string email = 2;
+}
+message DoesEmailExistResponse {
+    bool exists = 1;
+}
+message DoesUserNameExistRequest {
+    string username = 2;
+}
+message DoesUserNameExistResponse {
+    bool exists = 1;
+}
+message AccessToken {
+  string token = 1;
+  int64 expiresAt = 2;
+  string tokenType = 3;
+}
+message RefreshToken {
+  string token = 1;
+  int64 expiresAt = 2;
+}
+message SignupToken {
+  string token = 1;
+  int64 expiresAt = 2;
+}
+message IsSignupLinkValidRequest {
+    string token = 1;
+}
+message IsSignupLinkValidResponse {
+    bool isValid = 1;
+}
+message UserDetails{
+    string accountID = 1;
+    string email = 2;
+}
+
+message TeacherSignupRequest {
+    string firstname = 1;
+    string lastname = 2;
+    string password = 3;
+    string token = 4;
+    string email = 5;
+}
+message TeacherSignupResponse {
+    bool succeeded = 1;
+    AccessToken accessToken = 2;
+    RefreshToken refreshToken = 3;
+}
+message InviteTeacherRequest {
+    string token = 1;
+    UserDetails userDetails = 2;
+}
+
+message OperationStatus {
+    bool completed = 1;
+}
+message Profile {
+	string id = 1;
+	string accountID = 2;
+	string name = 3;
+    string phone = 4;
+    string email = 5;
+    string address = 6;
+    string gender = 7;
+    string company = 8;
+    string job = 9;
+    string lastSeen = 10;
+    string lastChat = 11;
+    repeated ProfileNotification notifications = 12;
+}
+message ProfileNotification {
+    string id = 1;
+    string content = 3;
+}
+message Notification  {
+  string id = 1 ;      
+	string title = 2;
+	int64 timestamp = 3;       
+	string content = 4;
+	string category = 6;   
+  string type = 7;
+
+}
+message GetNotificationsRequest {
+    string AccountID = 1;
+    int32 count = 3;
+    int32 skip = 4;
+}
+message GetNotificationsResponse {
+    repeated Notification notifications = 1;
+}
+message Plan {
+    string planID = 1;
+    string name = 2;
+    int64 periodEndAt = 3;
+    bool active = 4;
+    string require = 5;
+}
+message Role {
+    uint32 id = 1;
+    string name = 2;
+}
+message Permissions {
+    int32 id = 1;
+    bool writeComment =2;
+    bool live =3;
+    bool settings =4;
+    string accountID = 5;
+}
+
+service UserService {
+    rpc GetStudents(GetStudentRequest) returns (Students) {}
+    rpc GetStudent(GetStudentRequest) returns (Student) {}
+    rpc AddStudent(StudentAddRequest) returns (Student) {}
+    rpc UpdateStudentStatus(UpdateStudentStatusRequest) returns (UpdateStudentStatusResponse) {}
+    rpc UpdateStudent(StudentUpdateRequest) returns (Student) {}
+    rpc DeleteStudent(DeleteStudentRequest) returns (OperationStatus) {}
+    rpc DeleteStudents(MultiStudentsDeleteRequest) returns (OperationStatus) {}
+    rpc UpdateStudentOnlineStatus(UpdateStudentOnlineStatusRequest)returns (OperationStatus){}
+    rpc StudentSignup(StudentSignupRequest) returns (StudentSignupResponse) {}
+
+    /*
+         TEACHER
+     */
+
+    rpc InviteTeacher(InviteTeacherRequest) returns (OperationStatus) {}
+    rpc TeacherSignup(TeacherSignupRequest) returns (TeacherSignupResponse) {}
+
+    /*
+         USER
+     */
+
+    rpc GetUser(GetUserRequest) returns (User) {}
+    rpc GetUserByID(GetUserByIDRequest) returns (User) {}
+    rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
+    rpc PasswordResetLinkHealth(PasswordResetLinkHealthRequest) returns (PasswordResetLinkHealthResponse) {}
+    rpc ChangePasswordByLink(PasswordChangeByLinkRequest) returns (PasswordChangeByLinkResponse) {}
+    rpc DoesEmailExist(DoesEmailExistRequest) returns (DoesEmailExistResponse) {}
+    rpc DoesUserNameExist(DoesUserNameExistRequest) returns (DoesUserNameExistResponse) {}
+    rpc IsSignupLinkValid(IsSignupLinkValidRequest) returns (IsSignupLinkValidResponse) {}
+    rpc UserPasswordReset(UserPasswordResetRequest)returns (OperationStatus){}
+
+}
