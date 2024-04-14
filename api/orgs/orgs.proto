@@ -3,6 +3,154 @@ package orgs;
 option go_package = "./orgs";
 
 
+
+
+
+message Empty {}
+
+
+//intituations
+
+enum SCHOOLS {
+  school = 0;
+  middle = 1;
+  high = 2;
+}
+
+/*
+    DEPARTMENTS
+ */
+
+message Departments {
+  repeated Department departments = 1;
+}
+message Department {
+  string departmentID = 1;
+  string name = 2;
+  string arabicName = 3;
+  string  schools = 4;
+}
+message GetDepartmentsRequest{
+  string schoolID = 1;  // الطور [school - middle -high ]
+}
+message GetDepartmentRequest{
+  string departmentID = 1;
+}
+message DepartmentAddRequest {
+  string departmentID = 1;
+  string name = 2;
+  string arabicName = 3;
+  string  schools = 4;
+}
+message DepartmentUpdateRequest {
+  string departmentID = 1;
+  string name = 2;
+  string arabicName = 3;
+}
+message DeleteDepartmentsRequest {
+  string departmentID = 1;
+}
+message MultiDepartmentsDeleteRequest{
+  repeated string departmentsIDs = 1;
+}
+
+message Subjects {
+  repeated Subject subjects = 1;
+}
+
+message Subject {
+  string subjectID = 1;
+  string name = 2;
+  string arabicName = 3;
+}
+message GetSubjectsRequest{
+  string gradID = 1;
+}
+
+message GetSubjectRequest{
+  string subjectID = 1;
+}
+
+message SubjectAddRequest {
+  string subjectID = 1;
+  string name = 2;
+  string arabicName = 3;
+}
+
+message SubjectUpdateRequest {
+  string subjectID = 1;
+  string name = 2;
+  string arabicName = 3;
+}
+message DeleteSubjectsRequest {
+  string subjectID = 1;
+}
+message MultiSubjectsDeleteRequest{
+  repeated string subjectsIDs = 1;
+}
+
+
+message Grads {
+  repeated Grad grads = 1;
+}
+message Grad {
+  string gradID = 1;
+  string name = 2;
+  string arabicName = 3;
+}
+message GetGradsRequest{
+  string departmentID = 1;
+}
+message GetGradRequest{
+  string gradID = 1;
+}
+message GradAddRequest {
+  string gradID = 1;
+  string name = 2;
+  string arabicName = 3;
+  string  departmentID = 4;
+}
+message GradUpdateRequest {
+  string gradID = 1;
+  string name = 2;
+  string arabicName = 3;
+}
+message DeleteGradRequest {
+  string gradID = 1;
+}
+message MultiGradDeleteRequest{
+  repeated string gradsIDs = 1;
+}
+
+
+message OperationStatus {
+  bool status = 1;
+}
+
 service OrgService {
+  rpc GetDepartments(GetDepartmentsRequest) returns (Departments) {}
+  rpc GetDepartment(GetDepartmentRequest) returns (Department) {}
+  rpc AddDepartment(DepartmentAddRequest) returns (Department) {}
+  rpc UpdateDepartment(DepartmentUpdateRequest) returns (Department) {}
+  rpc DeleteDepartment(DeleteDepartmentsRequest) returns (OperationStatus) {}
+  rpc DeleteDepartments(MultiDepartmentsDeleteRequest) returns (OperationStatus) {}
+
+  rpc GetSubjects(GetDepartmentRequest) returns (Subjects) {}
+  rpc GetSubject(GetDepartmentRequest) returns (Subject) {}
+  rpc AddSubject(SubjectAddRequest) returns (Subject) {}
+  rpc UpdateSubject(SubjectUpdateRequest) returns (OperationStatus) {}
+  rpc DeleteSubject(DeleteSubjectsRequest) returns (OperationStatus) {}
+  rpc DeleteSubjects(MultiSubjectsDeleteRequest) returns (OperationStatus) {}
+
+
+
+  rpc GetGrads(GetGradsRequest) returns (Grads) {}
+  rpc GetGrad(GetGradRequest) returns (Grad) {}
+  rpc AddGrad(GradAddRequest) returns (Grad) {}
+  rpc UpdateGrad(GradUpdateRequest) returns (Grad) {}
+  rpc DeleteGrad(DeleteGradRequest) returns (OperationStatus) {}
+  rpc DeleteGrads(MultiGradDeleteRequest) returns (OperationStatus) {}
+
+
 
 }

@@ -10,6 +10,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -19,22 +20,1725 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type SCHOOLS int32
+
+const (
+	SCHOOLS_school SCHOOLS = 0
+	SCHOOLS_middle SCHOOLS = 1
+	SCHOOLS_high   SCHOOLS = 2
+)
+
+// Enum value maps for SCHOOLS.
+var (
+	SCHOOLS_name = map[int32]string{
+		0: "school",
+		1: "middle",
+		2: "high",
+	}
+	SCHOOLS_value = map[string]int32{
+		"school": 0,
+		"middle": 1,
+		"high":   2,
+	}
+)
+
+func (x SCHOOLS) Enum() *SCHOOLS {
+	p := new(SCHOOLS)
+	*p = x
+	return p
+}
+
+func (x SCHOOLS) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SCHOOLS) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_orgs_orgs_proto_enumTypes[0].Descriptor()
+}
+
+func (SCHOOLS) Type() protoreflect.EnumType {
+	return &file_api_orgs_orgs_proto_enumTypes[0]
+}
+
+func (x SCHOOLS) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SCHOOLS.Descriptor instead.
+func (SCHOOLS) EnumDescriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{0}
+}
+
+type Empty struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *Empty) Reset() {
+	*x = Empty{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Empty) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Empty) ProtoMessage() {}
+
+func (x *Empty) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{0}
+}
+
+type Departments struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Departments []*Department `protobuf:"bytes,1,rep,name=departments,proto3" json:"departments,omitempty"`
+}
+
+func (x *Departments) Reset() {
+	*x = Departments{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Departments) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Departments) ProtoMessage() {}
+
+func (x *Departments) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Departments.ProtoReflect.Descriptor instead.
+func (*Departments) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Departments) GetDepartments() []*Department {
+	if x != nil {
+		return x.Departments
+	}
+	return nil
+}
+
+type Department struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentID string `protobuf:"bytes,1,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+	Name         string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName   string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+	Schools      string `protobuf:"bytes,4,opt,name=schools,proto3" json:"schools,omitempty"`
+}
+
+func (x *Department) Reset() {
+	*x = Department{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Department) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Department) ProtoMessage() {}
+
+func (x *Department) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Department.ProtoReflect.Descriptor instead.
+func (*Department) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Department) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+func (x *Department) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Department) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+func (x *Department) GetSchools() string {
+	if x != nil {
+		return x.Schools
+	}
+	return ""
+}
+
+type GetDepartmentsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SchoolID string `protobuf:"bytes,1,opt,name=schoolID,proto3" json:"schoolID,omitempty"` // الطور [school - middle -high ]
+}
+
+func (x *GetDepartmentsRequest) Reset() {
+	*x = GetDepartmentsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetDepartmentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDepartmentsRequest) ProtoMessage() {}
+
+func (x *GetDepartmentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDepartmentsRequest.ProtoReflect.Descriptor instead.
+func (*GetDepartmentsRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetDepartmentsRequest) GetSchoolID() string {
+	if x != nil {
+		return x.SchoolID
+	}
+	return ""
+}
+
+type GetDepartmentRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentID string `protobuf:"bytes,1,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+}
+
+func (x *GetDepartmentRequest) Reset() {
+	*x = GetDepartmentRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetDepartmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDepartmentRequest) ProtoMessage() {}
+
+func (x *GetDepartmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDepartmentRequest.ProtoReflect.Descriptor instead.
+func (*GetDepartmentRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetDepartmentRequest) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+type DepartmentAddRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentID string `protobuf:"bytes,1,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+	Name         string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName   string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+	Schools      string `protobuf:"bytes,4,opt,name=schools,proto3" json:"schools,omitempty"`
+}
+
+func (x *DepartmentAddRequest) Reset() {
+	*x = DepartmentAddRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DepartmentAddRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DepartmentAddRequest) ProtoMessage() {}
+
+func (x *DepartmentAddRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DepartmentAddRequest.ProtoReflect.Descriptor instead.
+func (*DepartmentAddRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *DepartmentAddRequest) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+func (x *DepartmentAddRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DepartmentAddRequest) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+func (x *DepartmentAddRequest) GetSchools() string {
+	if x != nil {
+		return x.Schools
+	}
+	return ""
+}
+
+type DepartmentUpdateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentID string `protobuf:"bytes,1,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+	Name         string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName   string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+}
+
+func (x *DepartmentUpdateRequest) Reset() {
+	*x = DepartmentUpdateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DepartmentUpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DepartmentUpdateRequest) ProtoMessage() {}
+
+func (x *DepartmentUpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DepartmentUpdateRequest.ProtoReflect.Descriptor instead.
+func (*DepartmentUpdateRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *DepartmentUpdateRequest) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+func (x *DepartmentUpdateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DepartmentUpdateRequest) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+type DeleteDepartmentsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentID string `protobuf:"bytes,1,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+}
+
+func (x *DeleteDepartmentsRequest) Reset() {
+	*x = DeleteDepartmentsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteDepartmentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteDepartmentsRequest) ProtoMessage() {}
+
+func (x *DeleteDepartmentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteDepartmentsRequest.ProtoReflect.Descriptor instead.
+func (*DeleteDepartmentsRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *DeleteDepartmentsRequest) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+type MultiDepartmentsDeleteRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentsIDs []string `protobuf:"bytes,1,rep,name=departmentsIDs,proto3" json:"departmentsIDs,omitempty"`
+}
+
+func (x *MultiDepartmentsDeleteRequest) Reset() {
+	*x = MultiDepartmentsDeleteRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiDepartmentsDeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiDepartmentsDeleteRequest) ProtoMessage() {}
+
+func (x *MultiDepartmentsDeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiDepartmentsDeleteRequest.ProtoReflect.Descriptor instead.
+func (*MultiDepartmentsDeleteRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *MultiDepartmentsDeleteRequest) GetDepartmentsIDs() []string {
+	if x != nil {
+		return x.DepartmentsIDs
+	}
+	return nil
+}
+
+type Subjects struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Subjects []*Subject `protobuf:"bytes,1,rep,name=subjects,proto3" json:"subjects,omitempty"`
+}
+
+func (x *Subjects) Reset() {
+	*x = Subjects{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Subjects) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Subjects) ProtoMessage() {}
+
+func (x *Subjects) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Subjects.ProtoReflect.Descriptor instead.
+func (*Subjects) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Subjects) GetSubjects() []*Subject {
+	if x != nil {
+		return x.Subjects
+	}
+	return nil
+}
+
+type Subject struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SubjectID  string `protobuf:"bytes,1,opt,name=subjectID,proto3" json:"subjectID,omitempty"`
+	Name       string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+}
+
+func (x *Subject) Reset() {
+	*x = Subject{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Subject) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Subject) ProtoMessage() {}
+
+func (x *Subject) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Subject.ProtoReflect.Descriptor instead.
+func (*Subject) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *Subject) GetSubjectID() string {
+	if x != nil {
+		return x.SubjectID
+	}
+	return ""
+}
+
+func (x *Subject) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Subject) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+type GetSubjectsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradID string `protobuf:"bytes,1,opt,name=gradID,proto3" json:"gradID,omitempty"`
+}
+
+func (x *GetSubjectsRequest) Reset() {
+	*x = GetSubjectsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSubjectsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSubjectsRequest) ProtoMessage() {}
+
+func (x *GetSubjectsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSubjectsRequest.ProtoReflect.Descriptor instead.
+func (*GetSubjectsRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetSubjectsRequest) GetGradID() string {
+	if x != nil {
+		return x.GradID
+	}
+	return ""
+}
+
+type GetSubjectRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SubjectID string `protobuf:"bytes,1,opt,name=subjectID,proto3" json:"subjectID,omitempty"`
+}
+
+func (x *GetSubjectRequest) Reset() {
+	*x = GetSubjectRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSubjectRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSubjectRequest) ProtoMessage() {}
+
+func (x *GetSubjectRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSubjectRequest.ProtoReflect.Descriptor instead.
+func (*GetSubjectRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetSubjectRequest) GetSubjectID() string {
+	if x != nil {
+		return x.SubjectID
+	}
+	return ""
+}
+
+type SubjectAddRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SubjectID  string `protobuf:"bytes,1,opt,name=subjectID,proto3" json:"subjectID,omitempty"`
+	Name       string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+}
+
+func (x *SubjectAddRequest) Reset() {
+	*x = SubjectAddRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SubjectAddRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubjectAddRequest) ProtoMessage() {}
+
+func (x *SubjectAddRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubjectAddRequest.ProtoReflect.Descriptor instead.
+func (*SubjectAddRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SubjectAddRequest) GetSubjectID() string {
+	if x != nil {
+		return x.SubjectID
+	}
+	return ""
+}
+
+func (x *SubjectAddRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SubjectAddRequest) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+type SubjectUpdateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SubjectID  string `protobuf:"bytes,1,opt,name=subjectID,proto3" json:"subjectID,omitempty"`
+	Name       string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+}
+
+func (x *SubjectUpdateRequest) Reset() {
+	*x = SubjectUpdateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SubjectUpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubjectUpdateRequest) ProtoMessage() {}
+
+func (x *SubjectUpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubjectUpdateRequest.ProtoReflect.Descriptor instead.
+func (*SubjectUpdateRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SubjectUpdateRequest) GetSubjectID() string {
+	if x != nil {
+		return x.SubjectID
+	}
+	return ""
+}
+
+func (x *SubjectUpdateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SubjectUpdateRequest) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+type DeleteSubjectsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SubjectID string `protobuf:"bytes,1,opt,name=subjectID,proto3" json:"subjectID,omitempty"`
+}
+
+func (x *DeleteSubjectsRequest) Reset() {
+	*x = DeleteSubjectsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteSubjectsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSubjectsRequest) ProtoMessage() {}
+
+func (x *DeleteSubjectsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSubjectsRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSubjectsRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DeleteSubjectsRequest) GetSubjectID() string {
+	if x != nil {
+		return x.SubjectID
+	}
+	return ""
+}
+
+type MultiSubjectsDeleteRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SubjectsIDs []string `protobuf:"bytes,1,rep,name=subjectsIDs,proto3" json:"subjectsIDs,omitempty"`
+}
+
+func (x *MultiSubjectsDeleteRequest) Reset() {
+	*x = MultiSubjectsDeleteRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiSubjectsDeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiSubjectsDeleteRequest) ProtoMessage() {}
+
+func (x *MultiSubjectsDeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiSubjectsDeleteRequest.ProtoReflect.Descriptor instead.
+func (*MultiSubjectsDeleteRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *MultiSubjectsDeleteRequest) GetSubjectsIDs() []string {
+	if x != nil {
+		return x.SubjectsIDs
+	}
+	return nil
+}
+
+type Grads struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Grads []*Grad `protobuf:"bytes,1,rep,name=grads,proto3" json:"grads,omitempty"`
+}
+
+func (x *Grads) Reset() {
+	*x = Grads{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Grads) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Grads) ProtoMessage() {}
+
+func (x *Grads) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Grads.ProtoReflect.Descriptor instead.
+func (*Grads) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *Grads) GetGrads() []*Grad {
+	if x != nil {
+		return x.Grads
+	}
+	return nil
+}
+
+type Grad struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradID     string `protobuf:"bytes,1,opt,name=gradID,proto3" json:"gradID,omitempty"`
+	Name       string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+}
+
+func (x *Grad) Reset() {
+	*x = Grad{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Grad) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Grad) ProtoMessage() {}
+
+func (x *Grad) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Grad.ProtoReflect.Descriptor instead.
+func (*Grad) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *Grad) GetGradID() string {
+	if x != nil {
+		return x.GradID
+	}
+	return ""
+}
+
+func (x *Grad) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Grad) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+type GetGradsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DepartmentID string `protobuf:"bytes,1,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+}
+
+func (x *GetGradsRequest) Reset() {
+	*x = GetGradsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetGradsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGradsRequest) ProtoMessage() {}
+
+func (x *GetGradsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGradsRequest.ProtoReflect.Descriptor instead.
+func (*GetGradsRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetGradsRequest) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+type GetGradRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradID string `protobuf:"bytes,1,opt,name=gradID,proto3" json:"gradID,omitempty"`
+}
+
+func (x *GetGradRequest) Reset() {
+	*x = GetGradRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetGradRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGradRequest) ProtoMessage() {}
+
+func (x *GetGradRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGradRequest.ProtoReflect.Descriptor instead.
+func (*GetGradRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetGradRequest) GetGradID() string {
+	if x != nil {
+		return x.GradID
+	}
+	return ""
+}
+
+type GradAddRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradID       string `protobuf:"bytes,1,opt,name=gradID,proto3" json:"gradID,omitempty"`
+	Name         string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName   string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+	DepartmentID string `protobuf:"bytes,4,opt,name=departmentID,proto3" json:"departmentID,omitempty"`
+}
+
+func (x *GradAddRequest) Reset() {
+	*x = GradAddRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GradAddRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GradAddRequest) ProtoMessage() {}
+
+func (x *GradAddRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GradAddRequest.ProtoReflect.Descriptor instead.
+func (*GradAddRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GradAddRequest) GetGradID() string {
+	if x != nil {
+		return x.GradID
+	}
+	return ""
+}
+
+func (x *GradAddRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GradAddRequest) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+func (x *GradAddRequest) GetDepartmentID() string {
+	if x != nil {
+		return x.DepartmentID
+	}
+	return ""
+}
+
+type GradUpdateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradID     string `protobuf:"bytes,1,opt,name=gradID,proto3" json:"gradID,omitempty"`
+	Name       string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ArabicName string `protobuf:"bytes,3,opt,name=arabicName,proto3" json:"arabicName,omitempty"`
+}
+
+func (x *GradUpdateRequest) Reset() {
+	*x = GradUpdateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GradUpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GradUpdateRequest) ProtoMessage() {}
+
+func (x *GradUpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GradUpdateRequest.ProtoReflect.Descriptor instead.
+func (*GradUpdateRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *GradUpdateRequest) GetGradID() string {
+	if x != nil {
+		return x.GradID
+	}
+	return ""
+}
+
+func (x *GradUpdateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GradUpdateRequest) GetArabicName() string {
+	if x != nil {
+		return x.ArabicName
+	}
+	return ""
+}
+
+type DeleteGradRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradID string `protobuf:"bytes,1,opt,name=gradID,proto3" json:"gradID,omitempty"`
+}
+
+func (x *DeleteGradRequest) Reset() {
+	*x = DeleteGradRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteGradRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGradRequest) ProtoMessage() {}
+
+func (x *DeleteGradRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGradRequest.ProtoReflect.Descriptor instead.
+func (*DeleteGradRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *DeleteGradRequest) GetGradID() string {
+	if x != nil {
+		return x.GradID
+	}
+	return ""
+}
+
+type MultiGradDeleteRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GradsIDs []string `protobuf:"bytes,1,rep,name=gradsIDs,proto3" json:"gradsIDs,omitempty"`
+}
+
+func (x *MultiGradDeleteRequest) Reset() {
+	*x = MultiGradDeleteRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiGradDeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiGradDeleteRequest) ProtoMessage() {}
+
+func (x *MultiGradDeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiGradDeleteRequest.ProtoReflect.Descriptor instead.
+func (*MultiGradDeleteRequest) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *MultiGradDeleteRequest) GetGradsIDs() []string {
+	if x != nil {
+		return x.GradsIDs
+	}
+	return nil
+}
+
+type OperationStatus struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Status bool `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+}
+
+func (x *OperationStatus) Reset() {
+	*x = OperationStatus{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_orgs_orgs_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OperationStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OperationStatus) ProtoMessage() {}
+
+func (x *OperationStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_api_orgs_orgs_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OperationStatus.ProtoReflect.Descriptor instead.
+func (*OperationStatus) Descriptor() ([]byte, []int) {
+	return file_api_orgs_orgs_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *OperationStatus) GetStatus() bool {
+	if x != nil {
+		return x.Status
+	}
+	return false
+}
+
 var File_api_orgs_orgs_proto protoreflect.FileDescriptor
 
 var file_api_orgs_orgs_proto_rawDesc = []byte{
 	0x0a, 0x13, 0x61, 0x70, 0x69, 0x2f, 0x6f, 0x72, 0x67, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x73, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04, 0x6f, 0x72, 0x67, 0x73, 0x32, 0x0c, 0x0a, 0x0a, 0x4f,
-	0x72, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x6f,
-	0x72, 0x67, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04, 0x6f, 0x72, 0x67, 0x73, 0x22, 0x07, 0x0a, 0x05, 0x45,
+	0x6d, 0x70, 0x74, 0x79, 0x22, 0x41, 0x0a, 0x0b, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65,
+	0x6e, 0x74, 0x73, 0x12, 0x32, 0x0a, 0x0b, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e,
+	0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e,
+	0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x0b, 0x64, 0x65, 0x70, 0x61,
+	0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x7e, 0x0a, 0x0a, 0x44, 0x65, 0x70, 0x61, 0x72,
+	0x74, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x22, 0x0a, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d,
+	0x65, 0x6e, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70,
+	0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a,
+	0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x73, 0x63, 0x68, 0x6f, 0x6f, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x73, 0x63, 0x68, 0x6f, 0x6f, 0x6c, 0x73, 0x22, 0x33, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x44, 0x65,
+	0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x1a, 0x0a, 0x08, 0x73, 0x63, 0x68, 0x6f, 0x6f, 0x6c, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x73, 0x63, 0x68, 0x6f, 0x6f, 0x6c, 0x49, 0x44, 0x22, 0x3a, 0x0a, 0x14,
+	0x47, 0x65, 0x74, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x22, 0x0a, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65,
+	0x6e, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x61,
+	0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x22, 0x88, 0x01, 0x0a, 0x14, 0x44, 0x65, 0x70,
+	0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x22, 0x0a, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49,
+	0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d,
+	0x65, 0x6e, 0x74, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x72, 0x61,
+	0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61,
+	0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x63, 0x68,
+	0x6f, 0x6f, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x63, 0x68, 0x6f,
+	0x6f, 0x6c, 0x73, 0x22, 0x71, 0x0a, 0x17, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e,
+	0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x22,
+	0x0a, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74,
+	0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63,
+	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x72, 0x61, 0x62,
+	0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x3e, 0x0a, 0x18, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x22, 0x0a, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74,
+	0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74,
+	0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x22, 0x47, 0x0a, 0x1d, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x44,
+	0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x26, 0x0a, 0x0e, 0x64, 0x65, 0x70, 0x61, 0x72,
+	0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x49, 0x44, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52,
+	0x0e, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x49, 0x44, 0x73, 0x22,
+	0x35, 0x0a, 0x08, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x12, 0x29, 0x0a, 0x08, 0x73,
+	0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e,
+	0x6f, 0x72, 0x67, 0x73, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x08, 0x73, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x22, 0x5b, 0x0a, 0x07, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x44, 0x12,
+	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d,
+	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e,
+	0x61, 0x6d, 0x65, 0x22, 0x2c, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x72, 0x61,
+	0x64, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49,
+	0x44, 0x22, 0x31, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65,
+	0x63, 0x74, 0x49, 0x44, 0x22, 0x65, 0x0a, 0x11, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x41,
+	0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x75, 0x62,
+	0x6a, 0x65, 0x63, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61,
+	0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x68, 0x0a, 0x14, 0x53,
+	0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x44,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49,
+	0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e,
+	0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69,
+	0x63, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x35, 0x0a, 0x15, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53,
+	0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c,
+	0x0a, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x44, 0x22, 0x3e, 0x0a, 0x1a,
+	0x4d, 0x75, 0x6c, 0x74, 0x69, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x73, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x49, 0x44, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52,
+	0x0b, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x49, 0x44, 0x73, 0x22, 0x29, 0x0a, 0x05,
+	0x47, 0x72, 0x61, 0x64, 0x73, 0x12, 0x20, 0x0a, 0x05, 0x67, 0x72, 0x61, 0x64, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x72, 0x61, 0x64,
+	0x52, 0x05, 0x67, 0x72, 0x61, 0x64, 0x73, 0x22, 0x52, 0x0a, 0x04, 0x47, 0x72, 0x61, 0x64, 0x12,
+	0x16, 0x0a, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61,
+	0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x35, 0x0a, 0x0f, 0x47,
+	0x65, 0x74, 0x47, 0x72, 0x61, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x22,
+	0x0a, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74,
+	0x49, 0x44, 0x22, 0x28, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x47, 0x72, 0x61, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x22, 0x80, 0x01, 0x0a,
+	0x0e, 0x47, 0x72, 0x61, 0x64, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x16, 0x0a, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61,
+	0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x64,
+	0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x64, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x44, 0x22,
+	0x5f, 0x0a, 0x11, 0x47, 0x72, 0x61, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x72, 0x61, 0x62, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65,
+	0x22, 0x2b, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x47, 0x72, 0x61, 0x64, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x67, 0x72, 0x61, 0x64, 0x49, 0x44, 0x22, 0x34, 0x0a,
+	0x16, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x47, 0x72, 0x61, 0x64, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x67, 0x72, 0x61, 0x64, 0x73,
+	0x49, 0x44, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x67, 0x72, 0x61, 0x64, 0x73,
+	0x49, 0x44, 0x73, 0x22, 0x29, 0x0a, 0x0f, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x2a, 0x2b,
+	0x0a, 0x07, 0x53, 0x43, 0x48, 0x4f, 0x4f, 0x4c, 0x53, 0x12, 0x0a, 0x0a, 0x06, 0x73, 0x63, 0x68,
+	0x6f, 0x6f, 0x6c, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x6d, 0x69, 0x64, 0x64, 0x6c, 0x65, 0x10,
+	0x01, 0x12, 0x08, 0x0a, 0x04, 0x68, 0x69, 0x67, 0x68, 0x10, 0x02, 0x32, 0x8e, 0x09, 0x0a, 0x0a,
+	0x4f, 0x72, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x42, 0x0a, 0x0e, 0x47, 0x65,
+	0x74, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x1b, 0x2e, 0x6f,
+	0x72, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e,
+	0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x6f, 0x72, 0x67, 0x73,
+	0x2e, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x00, 0x12, 0x3f,
+	0x0a, 0x0d, 0x47, 0x65, 0x74, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x12,
+	0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74,
+	0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x10, 0x2e, 0x6f, 0x72,
+	0x67, 0x73, 0x2e, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x00, 0x12,
+	0x3f, 0x0a, 0x0d, 0x41, 0x64, 0x64, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74,
+	0x12, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65,
+	0x6e, 0x74, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x10, 0x2e, 0x6f,
+	0x72, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x00,
+	0x12, 0x45, 0x0a, 0x10, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74,
+	0x6d, 0x65, 0x6e, 0x74, 0x12, 0x1d, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x70, 0x61,
+	0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x10, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x70, 0x61, 0x72,
+	0x74, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x00, 0x12, 0x4b, 0x0a, 0x10, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x1e, 0x2e, 0x6f, 0x72,
+	0x67, 0x73, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x6f, 0x72,
+	0x67, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x22, 0x00, 0x12, 0x51, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x44, 0x65,
+	0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x23, 0x2e, 0x6f, 0x72, 0x67, 0x73,
+	0x2e, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74,
+	0x73, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15,
+	0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x00, 0x12, 0x3b, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x53, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x12, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x65,
+	0x74, 0x44, 0x65, 0x70, 0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x0e, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x73, 0x22, 0x00, 0x12, 0x39, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65,
+	0x63, 0x74, 0x12, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65, 0x70,
+	0x61, 0x72, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0d,
+	0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0x00, 0x12,
+	0x36, 0x0a, 0x0a, 0x41, 0x64, 0x64, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x17, 0x2e,
+	0x6f, 0x72, 0x67, 0x73, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x64, 0x64, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0d, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x53, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0x00, 0x12, 0x44, 0x0a, 0x0d, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e,
+	0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x00, 0x12, 0x45, 0x0a,
+	0x0d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x1b,
+	0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x75, 0x62, 0x6a,
+	0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x6f, 0x72,
+	0x67, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x22, 0x00, 0x12, 0x4b, 0x0a, 0x0e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x12, 0x20, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x4d, 0x75,
+	0x6c, 0x74, 0x69, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e,
+	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22,
+	0x00, 0x12, 0x30, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x47, 0x72, 0x61, 0x64, 0x73, 0x12, 0x15, 0x2e,
+	0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x72, 0x61, 0x64, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x0b, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x72, 0x61, 0x64,
+	0x73, 0x22, 0x00, 0x12, 0x2d, 0x0a, 0x07, 0x47, 0x65, 0x74, 0x47, 0x72, 0x61, 0x64, 0x12, 0x14,
+	0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x72, 0x61, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x72, 0x61, 0x64,
+	0x22, 0x00, 0x12, 0x2d, 0x0a, 0x07, 0x41, 0x64, 0x64, 0x47, 0x72, 0x61, 0x64, 0x12, 0x14, 0x2e,
+	0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x72, 0x61, 0x64, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x72, 0x61, 0x64, 0x22,
+	0x00, 0x12, 0x33, 0x0a, 0x0a, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x47, 0x72, 0x61, 0x64, 0x12,
+	0x17, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x47, 0x72, 0x61, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0a, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e,
+	0x47, 0x72, 0x61, 0x64, 0x22, 0x00, 0x12, 0x3e, 0x0a, 0x0a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x47, 0x72, 0x61, 0x64, 0x12, 0x17, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x47, 0x72, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e,
+	0x6f, 0x72, 0x67, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x22, 0x00, 0x12, 0x44, 0x0a, 0x0b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x47, 0x72, 0x61, 0x64, 0x73, 0x12, 0x1c, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x4d, 0x75, 0x6c,
+	0x74, 0x69, 0x47, 0x72, 0x61, 0x64, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x6f, 0x72, 0x67, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x00, 0x42, 0x08, 0x5a, 0x06,
+	0x2e, 0x2f, 0x6f, 0x72, 0x67, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
-var file_api_orgs_orgs_proto_goTypes = []interface{}{}
+var (
+	file_api_orgs_orgs_proto_rawDescOnce sync.Once
+	file_api_orgs_orgs_proto_rawDescData = file_api_orgs_orgs_proto_rawDesc
+)
+
+func file_api_orgs_orgs_proto_rawDescGZIP() []byte {
+	file_api_orgs_orgs_proto_rawDescOnce.Do(func() {
+		file_api_orgs_orgs_proto_rawDescData = protoimpl.X.CompressGZIP(file_api_orgs_orgs_proto_rawDescData)
+	})
+	return file_api_orgs_orgs_proto_rawDescData
+}
+
+var file_api_orgs_orgs_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_api_orgs_orgs_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_api_orgs_orgs_proto_goTypes = []interface{}{
+	(SCHOOLS)(0),                          // 0: orgs.SCHOOLS
+	(*Empty)(nil),                         // 1: orgs.Empty
+	(*Departments)(nil),                   // 2: orgs.Departments
+	(*Department)(nil),                    // 3: orgs.Department
+	(*GetDepartmentsRequest)(nil),         // 4: orgs.GetDepartmentsRequest
+	(*GetDepartmentRequest)(nil),          // 5: orgs.GetDepartmentRequest
+	(*DepartmentAddRequest)(nil),          // 6: orgs.DepartmentAddRequest
+	(*DepartmentUpdateRequest)(nil),       // 7: orgs.DepartmentUpdateRequest
+	(*DeleteDepartmentsRequest)(nil),      // 8: orgs.DeleteDepartmentsRequest
+	(*MultiDepartmentsDeleteRequest)(nil), // 9: orgs.MultiDepartmentsDeleteRequest
+	(*Subjects)(nil),                      // 10: orgs.Subjects
+	(*Subject)(nil),                       // 11: orgs.Subject
+	(*GetSubjectsRequest)(nil),            // 12: orgs.GetSubjectsRequest
+	(*GetSubjectRequest)(nil),             // 13: orgs.GetSubjectRequest
+	(*SubjectAddRequest)(nil),             // 14: orgs.SubjectAddRequest
+	(*SubjectUpdateRequest)(nil),          // 15: orgs.SubjectUpdateRequest
+	(*DeleteSubjectsRequest)(nil),         // 16: orgs.DeleteSubjectsRequest
+	(*MultiSubjectsDeleteRequest)(nil),    // 17: orgs.MultiSubjectsDeleteRequest
+	(*Grads)(nil),                         // 18: orgs.Grads
+	(*Grad)(nil),                          // 19: orgs.Grad
+	(*GetGradsRequest)(nil),               // 20: orgs.GetGradsRequest
+	(*GetGradRequest)(nil),                // 21: orgs.GetGradRequest
+	(*GradAddRequest)(nil),                // 22: orgs.GradAddRequest
+	(*GradUpdateRequest)(nil),             // 23: orgs.GradUpdateRequest
+	(*DeleteGradRequest)(nil),             // 24: orgs.DeleteGradRequest
+	(*MultiGradDeleteRequest)(nil),        // 25: orgs.MultiGradDeleteRequest
+	(*OperationStatus)(nil),               // 26: orgs.OperationStatus
+}
 var file_api_orgs_orgs_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3,  // 0: orgs.Departments.departments:type_name -> orgs.Department
+	11, // 1: orgs.Subjects.subjects:type_name -> orgs.Subject
+	19, // 2: orgs.Grads.grads:type_name -> orgs.Grad
+	4,  // 3: orgs.OrgService.GetDepartments:input_type -> orgs.GetDepartmentsRequest
+	5,  // 4: orgs.OrgService.GetDepartment:input_type -> orgs.GetDepartmentRequest
+	6,  // 5: orgs.OrgService.AddDepartment:input_type -> orgs.DepartmentAddRequest
+	7,  // 6: orgs.OrgService.UpdateDepartment:input_type -> orgs.DepartmentUpdateRequest
+	8,  // 7: orgs.OrgService.DeleteDepartment:input_type -> orgs.DeleteDepartmentsRequest
+	9,  // 8: orgs.OrgService.DeleteDepartments:input_type -> orgs.MultiDepartmentsDeleteRequest
+	5,  // 9: orgs.OrgService.GetSubjects:input_type -> orgs.GetDepartmentRequest
+	5,  // 10: orgs.OrgService.GetSubject:input_type -> orgs.GetDepartmentRequest
+	14, // 11: orgs.OrgService.AddSubject:input_type -> orgs.SubjectAddRequest
+	15, // 12: orgs.OrgService.UpdateSubject:input_type -> orgs.SubjectUpdateRequest
+	16, // 13: orgs.OrgService.DeleteSubject:input_type -> orgs.DeleteSubjectsRequest
+	17, // 14: orgs.OrgService.DeleteSubjects:input_type -> orgs.MultiSubjectsDeleteRequest
+	20, // 15: orgs.OrgService.GetGrads:input_type -> orgs.GetGradsRequest
+	21, // 16: orgs.OrgService.GetGrad:input_type -> orgs.GetGradRequest
+	22, // 17: orgs.OrgService.AddGrad:input_type -> orgs.GradAddRequest
+	23, // 18: orgs.OrgService.UpdateGrad:input_type -> orgs.GradUpdateRequest
+	24, // 19: orgs.OrgService.DeleteGrad:input_type -> orgs.DeleteGradRequest
+	25, // 20: orgs.OrgService.DeleteGrads:input_type -> orgs.MultiGradDeleteRequest
+	2,  // 21: orgs.OrgService.GetDepartments:output_type -> orgs.Departments
+	3,  // 22: orgs.OrgService.GetDepartment:output_type -> orgs.Department
+	3,  // 23: orgs.OrgService.AddDepartment:output_type -> orgs.Department
+	3,  // 24: orgs.OrgService.UpdateDepartment:output_type -> orgs.Department
+	26, // 25: orgs.OrgService.DeleteDepartment:output_type -> orgs.OperationStatus
+	26, // 26: orgs.OrgService.DeleteDepartments:output_type -> orgs.OperationStatus
+	10, // 27: orgs.OrgService.GetSubjects:output_type -> orgs.Subjects
+	11, // 28: orgs.OrgService.GetSubject:output_type -> orgs.Subject
+	11, // 29: orgs.OrgService.AddSubject:output_type -> orgs.Subject
+	26, // 30: orgs.OrgService.UpdateSubject:output_type -> orgs.OperationStatus
+	26, // 31: orgs.OrgService.DeleteSubject:output_type -> orgs.OperationStatus
+	26, // 32: orgs.OrgService.DeleteSubjects:output_type -> orgs.OperationStatus
+	18, // 33: orgs.OrgService.GetGrads:output_type -> orgs.Grads
+	19, // 34: orgs.OrgService.GetGrad:output_type -> orgs.Grad
+	19, // 35: orgs.OrgService.AddGrad:output_type -> orgs.Grad
+	19, // 36: orgs.OrgService.UpdateGrad:output_type -> orgs.Grad
+	26, // 37: orgs.OrgService.DeleteGrad:output_type -> orgs.OperationStatus
+	26, // 38: orgs.OrgService.DeleteGrads:output_type -> orgs.OperationStatus
+	21, // [21:39] is the sub-list for method output_type
+	3,  // [3:21] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_api_orgs_orgs_proto_init() }
@@ -42,18 +1746,334 @@ func file_api_orgs_orgs_proto_init() {
 	if File_api_orgs_orgs_proto != nil {
 		return
 	}
+	if !protoimpl.UnsafeEnabled {
+		file_api_orgs_orgs_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Empty); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Departments); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Department); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetDepartmentsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetDepartmentRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DepartmentAddRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DepartmentUpdateRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteDepartmentsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiDepartmentsDeleteRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Subjects); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Subject); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetSubjectsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetSubjectRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SubjectAddRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SubjectUpdateRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteSubjectsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiSubjectsDeleteRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Grads); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Grad); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetGradsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetGradRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GradAddRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GradUpdateRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteGradRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiGradDeleteRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_orgs_orgs_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OperationStatus); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_orgs_orgs_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   0,
+			NumEnums:      1,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_api_orgs_orgs_proto_goTypes,
 		DependencyIndexes: file_api_orgs_orgs_proto_depIdxs,
+		EnumInfos:         file_api_orgs_orgs_proto_enumTypes,
+		MessageInfos:      file_api_orgs_orgs_proto_msgTypes,
 	}.Build()
 	File_api_orgs_orgs_proto = out.File
 	file_api_orgs_orgs_proto_rawDesc = nil

@@ -7,7 +7,10 @@
 package orgs
 
 import (
+	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,6 +22,24 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrgServiceClient interface {
+	GetDepartments(ctx context.Context, in *GetDepartmentsRequest, opts ...grpc.CallOption) (*Departments, error)
+	GetDepartment(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Department, error)
+	AddDepartment(ctx context.Context, in *DepartmentAddRequest, opts ...grpc.CallOption) (*Department, error)
+	UpdateDepartment(ctx context.Context, in *DepartmentUpdateRequest, opts ...grpc.CallOption) (*Department, error)
+	DeleteDepartment(ctx context.Context, in *DeleteDepartmentsRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	DeleteDepartments(ctx context.Context, in *MultiDepartmentsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	GetSubjects(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subjects, error)
+	GetSubject(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subject, error)
+	AddSubject(ctx context.Context, in *SubjectAddRequest, opts ...grpc.CallOption) (*Subject, error)
+	UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	DeleteSubject(ctx context.Context, in *DeleteSubjectsRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	DeleteSubjects(ctx context.Context, in *MultiSubjectsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	GetGrads(ctx context.Context, in *GetGradsRequest, opts ...grpc.CallOption) (*Grads, error)
+	GetGrad(ctx context.Context, in *GetGradRequest, opts ...grpc.CallOption) (*Grad, error)
+	AddGrad(ctx context.Context, in *GradAddRequest, opts ...grpc.CallOption) (*Grad, error)
+	UpdateGrad(ctx context.Context, in *GradUpdateRequest, opts ...grpc.CallOption) (*Grad, error)
+	DeleteGrad(ctx context.Context, in *DeleteGradRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	DeleteGrads(ctx context.Context, in *MultiGradDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
 }
 
 type orgServiceClient struct {
@@ -29,10 +50,190 @@ func NewOrgServiceClient(cc grpc.ClientConnInterface) OrgServiceClient {
 	return &orgServiceClient{cc}
 }
 
+func (c *orgServiceClient) GetDepartments(ctx context.Context, in *GetDepartmentsRequest, opts ...grpc.CallOption) (*Departments, error) {
+	out := new(Departments)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetDepartments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) GetDepartment(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Department, error) {
+	out := new(Department)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetDepartment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) AddDepartment(ctx context.Context, in *DepartmentAddRequest, opts ...grpc.CallOption) (*Department, error) {
+	out := new(Department)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/AddDepartment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) UpdateDepartment(ctx context.Context, in *DepartmentUpdateRequest, opts ...grpc.CallOption) (*Department, error) {
+	out := new(Department)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/UpdateDepartment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) DeleteDepartment(ctx context.Context, in *DeleteDepartmentsRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteDepartment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) DeleteDepartments(ctx context.Context, in *MultiDepartmentsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteDepartments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) GetSubjects(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subjects, error) {
+	out := new(Subjects)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSubjects", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) GetSubject(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subject, error) {
+	out := new(Subject)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSubject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) AddSubject(ctx context.Context, in *SubjectAddRequest, opts ...grpc.CallOption) (*Subject, error) {
+	out := new(Subject)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/AddSubject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/UpdateSubject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) DeleteSubject(ctx context.Context, in *DeleteSubjectsRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteSubject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) DeleteSubjects(ctx context.Context, in *MultiSubjectsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteSubjects", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) GetGrads(ctx context.Context, in *GetGradsRequest, opts ...grpc.CallOption) (*Grads, error) {
+	out := new(Grads)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetGrads", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) GetGrad(ctx context.Context, in *GetGradRequest, opts ...grpc.CallOption) (*Grad, error) {
+	out := new(Grad)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetGrad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) AddGrad(ctx context.Context, in *GradAddRequest, opts ...grpc.CallOption) (*Grad, error) {
+	out := new(Grad)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/AddGrad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) UpdateGrad(ctx context.Context, in *GradUpdateRequest, opts ...grpc.CallOption) (*Grad, error) {
+	out := new(Grad)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/UpdateGrad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) DeleteGrad(ctx context.Context, in *DeleteGradRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteGrad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) DeleteGrads(ctx context.Context, in *MultiGradDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
+	out := new(OperationStatus)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteGrads", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServiceServer is the server API for OrgService service.
 // All implementations must embed UnimplementedOrgServiceServer
 // for forward compatibility
 type OrgServiceServer interface {
+	GetDepartments(context.Context, *GetDepartmentsRequest) (*Departments, error)
+	GetDepartment(context.Context, *GetDepartmentRequest) (*Department, error)
+	AddDepartment(context.Context, *DepartmentAddRequest) (*Department, error)
+	UpdateDepartment(context.Context, *DepartmentUpdateRequest) (*Department, error)
+	DeleteDepartment(context.Context, *DeleteDepartmentsRequest) (*OperationStatus, error)
+	DeleteDepartments(context.Context, *MultiDepartmentsDeleteRequest) (*OperationStatus, error)
+	GetSubjects(context.Context, *GetDepartmentRequest) (*Subjects, error)
+	GetSubject(context.Context, *GetDepartmentRequest) (*Subject, error)
+	AddSubject(context.Context, *SubjectAddRequest) (*Subject, error)
+	UpdateSubject(context.Context, *SubjectUpdateRequest) (*OperationStatus, error)
+	DeleteSubject(context.Context, *DeleteSubjectsRequest) (*OperationStatus, error)
+	DeleteSubjects(context.Context, *MultiSubjectsDeleteRequest) (*OperationStatus, error)
+	GetGrads(context.Context, *GetGradsRequest) (*Grads, error)
+	GetGrad(context.Context, *GetGradRequest) (*Grad, error)
+	AddGrad(context.Context, *GradAddRequest) (*Grad, error)
+	UpdateGrad(context.Context, *GradUpdateRequest) (*Grad, error)
+	DeleteGrad(context.Context, *DeleteGradRequest) (*OperationStatus, error)
+	DeleteGrads(context.Context, *MultiGradDeleteRequest) (*OperationStatus, error)
 	mustEmbedUnimplementedOrgServiceServer()
 }
 
@@ -40,6 +241,60 @@ type OrgServiceServer interface {
 type UnimplementedOrgServiceServer struct {
 }
 
+func (UnimplementedOrgServiceServer) GetDepartments(context.Context, *GetDepartmentsRequest) (*Departments, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDepartments not implemented")
+}
+func (UnimplementedOrgServiceServer) GetDepartment(context.Context, *GetDepartmentRequest) (*Department, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDepartment not implemented")
+}
+func (UnimplementedOrgServiceServer) AddDepartment(context.Context, *DepartmentAddRequest) (*Department, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddDepartment not implemented")
+}
+func (UnimplementedOrgServiceServer) UpdateDepartment(context.Context, *DepartmentUpdateRequest) (*Department, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDepartment not implemented")
+}
+func (UnimplementedOrgServiceServer) DeleteDepartment(context.Context, *DeleteDepartmentsRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDepartment not implemented")
+}
+func (UnimplementedOrgServiceServer) DeleteDepartments(context.Context, *MultiDepartmentsDeleteRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDepartments not implemented")
+}
+func (UnimplementedOrgServiceServer) GetSubjects(context.Context, *GetDepartmentRequest) (*Subjects, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSubjects not implemented")
+}
+func (UnimplementedOrgServiceServer) GetSubject(context.Context, *GetDepartmentRequest) (*Subject, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSubject not implemented")
+}
+func (UnimplementedOrgServiceServer) AddSubject(context.Context, *SubjectAddRequest) (*Subject, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSubject not implemented")
+}
+func (UnimplementedOrgServiceServer) UpdateSubject(context.Context, *SubjectUpdateRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSubject not implemented")
+}
+func (UnimplementedOrgServiceServer) DeleteSubject(context.Context, *DeleteSubjectsRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSubject not implemented")
+}
+func (UnimplementedOrgServiceServer) DeleteSubjects(context.Context, *MultiSubjectsDeleteRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSubjects not implemented")
+}
+func (UnimplementedOrgServiceServer) GetGrads(context.Context, *GetGradsRequest) (*Grads, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGrads not implemented")
+}
+func (UnimplementedOrgServiceServer) GetGrad(context.Context, *GetGradRequest) (*Grad, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGrad not implemented")
+}
+func (UnimplementedOrgServiceServer) AddGrad(context.Context, *GradAddRequest) (*Grad, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGrad not implemented")
+}
+func (UnimplementedOrgServiceServer) UpdateGrad(context.Context, *GradUpdateRequest) (*Grad, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGrad not implemented")
+}
+func (UnimplementedOrgServiceServer) DeleteGrad(context.Context, *DeleteGradRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGrad not implemented")
+}
+func (UnimplementedOrgServiceServer) DeleteGrads(context.Context, *MultiGradDeleteRequest) (*OperationStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGrads not implemented")
+}
 func (UnimplementedOrgServiceServer) mustEmbedUnimplementedOrgServiceServer() {}
 
 // UnsafeOrgServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -53,13 +308,410 @@ func RegisterOrgServiceServer(s grpc.ServiceRegistrar, srv OrgServiceServer) {
 	s.RegisterService(&OrgService_ServiceDesc, srv)
 }
 
+func _OrgService_GetDepartments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDepartmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetDepartments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetDepartments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetDepartments(ctx, req.(*GetDepartmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_GetDepartment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDepartmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetDepartment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetDepartment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetDepartment(ctx, req.(*GetDepartmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_AddDepartment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DepartmentAddRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).AddDepartment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/AddDepartment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).AddDepartment(ctx, req.(*DepartmentAddRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_UpdateDepartment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DepartmentUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).UpdateDepartment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/UpdateDepartment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).UpdateDepartment(ctx, req.(*DepartmentUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_DeleteDepartment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDepartmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).DeleteDepartment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/DeleteDepartment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).DeleteDepartment(ctx, req.(*DeleteDepartmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_DeleteDepartments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiDepartmentsDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).DeleteDepartments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/DeleteDepartments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).DeleteDepartments(ctx, req.(*MultiDepartmentsDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_GetSubjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDepartmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetSubjects(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetSubjects",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetSubjects(ctx, req.(*GetDepartmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_GetSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDepartmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetSubject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetSubject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetSubject(ctx, req.(*GetDepartmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_AddSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectAddRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).AddSubject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/AddSubject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).AddSubject(ctx, req.(*SubjectAddRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_UpdateSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).UpdateSubject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/UpdateSubject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).UpdateSubject(ctx, req.(*SubjectUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_DeleteSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSubjectsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).DeleteSubject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/DeleteSubject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).DeleteSubject(ctx, req.(*DeleteSubjectsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_DeleteSubjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiSubjectsDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).DeleteSubjects(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/DeleteSubjects",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).DeleteSubjects(ctx, req.(*MultiSubjectsDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_GetGrads_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGradsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetGrads(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetGrads",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetGrads(ctx, req.(*GetGradsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_GetGrad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGradRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetGrad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetGrad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetGrad(ctx, req.(*GetGradRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_AddGrad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GradAddRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).AddGrad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/AddGrad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).AddGrad(ctx, req.(*GradAddRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_UpdateGrad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GradUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).UpdateGrad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/UpdateGrad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).UpdateGrad(ctx, req.(*GradUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_DeleteGrad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGradRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).DeleteGrad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/DeleteGrad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).DeleteGrad(ctx, req.(*DeleteGradRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_DeleteGrads_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiGradDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).DeleteGrads(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/DeleteGrads",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).DeleteGrads(ctx, req.(*MultiGradDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrgService_ServiceDesc is the grpc.ServiceDesc for OrgService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var OrgService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "orgs.OrgService",
 	HandlerType: (*OrgServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "api/orgs/orgs.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetDepartments",
+			Handler:    _OrgService_GetDepartments_Handler,
+		},
+		{
+			MethodName: "GetDepartment",
+			Handler:    _OrgService_GetDepartment_Handler,
+		},
+		{
+			MethodName: "AddDepartment",
+			Handler:    _OrgService_AddDepartment_Handler,
+		},
+		{
+			MethodName: "UpdateDepartment",
+			Handler:    _OrgService_UpdateDepartment_Handler,
+		},
+		{
+			MethodName: "DeleteDepartment",
+			Handler:    _OrgService_DeleteDepartment_Handler,
+		},
+		{
+			MethodName: "DeleteDepartments",
+			Handler:    _OrgService_DeleteDepartments_Handler,
+		},
+		{
+			MethodName: "GetSubjects",
+			Handler:    _OrgService_GetSubjects_Handler,
+		},
+		{
+			MethodName: "GetSubject",
+			Handler:    _OrgService_GetSubject_Handler,
+		},
+		{
+			MethodName: "AddSubject",
+			Handler:    _OrgService_AddSubject_Handler,
+		},
+		{
+			MethodName: "UpdateSubject",
+			Handler:    _OrgService_UpdateSubject_Handler,
+		},
+		{
+			MethodName: "DeleteSubject",
+			Handler:    _OrgService_DeleteSubject_Handler,
+		},
+		{
+			MethodName: "DeleteSubjects",
+			Handler:    _OrgService_DeleteSubjects_Handler,
+		},
+		{
+			MethodName: "GetGrads",
+			Handler:    _OrgService_GetGrads_Handler,
+		},
+		{
+			MethodName: "GetGrad",
+			Handler:    _OrgService_GetGrad_Handler,
+		},
+		{
+			MethodName: "AddGrad",
+			Handler:    _OrgService_AddGrad_Handler,
+		},
+		{
+			MethodName: "UpdateGrad",
+			Handler:    _OrgService_UpdateGrad_Handler,
+		},
+		{
+			MethodName: "DeleteGrad",
+			Handler:    _OrgService_DeleteGrad_Handler,
+		},
+		{
+			MethodName: "DeleteGrads",
+			Handler:    _OrgService_DeleteGrads_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "api/orgs/orgs.proto",
 }
