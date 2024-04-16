@@ -33,6 +33,7 @@ type UserServiceClient interface {
 	StudentSignup(ctx context.Context, in *StudentSignupRequest, opts ...grpc.CallOption) (*StudentSignupResponse, error)
 	InviteTeacher(ctx context.Context, in *InviteTeacherRequest, opts ...grpc.CallOption) (*OperationStatus, error)
 	TeacherSignup(ctx context.Context, in *TeacherSignupRequest, opts ...grpc.CallOption) (*TeacherSignupResponse, error)
+	GetTeacherBySubject(ctx context.Context, in *GetTeacherBySubjectRequest, opts ...grpc.CallOption) (*Teachers, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error)
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*User, error)
 	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
@@ -54,7 +55,7 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 
 func (c *userServiceClient) GetStudents(ctx context.Context, in *GetStudentRequest, opts ...grpc.CallOption) (*Students, error) {
 	out := new(Students)
-	err := c.cc.Invoke(ctx, "/users.UserService/GetStudents", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/GetStudents", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +64,7 @@ func (c *userServiceClient) GetStudents(ctx context.Context, in *GetStudentReque
 
 func (c *userServiceClient) GetStudent(ctx context.Context, in *GetStudentRequest, opts ...grpc.CallOption) (*Student, error) {
 	out := new(Student)
-	err := c.cc.Invoke(ctx, "/users.UserService/GetStudent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/GetStudent", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +73,7 @@ func (c *userServiceClient) GetStudent(ctx context.Context, in *GetStudentReques
 
 func (c *userServiceClient) AddStudent(ctx context.Context, in *StudentAddRequest, opts ...grpc.CallOption) (*Student, error) {
 	out := new(Student)
-	err := c.cc.Invoke(ctx, "/users.UserService/AddStudent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/AddStudent", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +82,7 @@ func (c *userServiceClient) AddStudent(ctx context.Context, in *StudentAddReques
 
 func (c *userServiceClient) UpdateStudentStatus(ctx context.Context, in *UpdateStudentStatusRequest, opts ...grpc.CallOption) (*UpdateStudentStatusResponse, error) {
 	out := new(UpdateStudentStatusResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/UpdateStudentStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/UpdateStudentStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (c *userServiceClient) UpdateStudentStatus(ctx context.Context, in *UpdateS
 
 func (c *userServiceClient) UpdateStudent(ctx context.Context, in *StudentUpdateRequest, opts ...grpc.CallOption) (*Student, error) {
 	out := new(Student)
-	err := c.cc.Invoke(ctx, "/users.UserService/UpdateStudent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/UpdateStudent", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (c *userServiceClient) UpdateStudent(ctx context.Context, in *StudentUpdate
 
 func (c *userServiceClient) DeleteStudent(ctx context.Context, in *DeleteStudentRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
 	out := new(OperationStatus)
-	err := c.cc.Invoke(ctx, "/users.UserService/DeleteStudent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/DeleteStudent", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +109,7 @@ func (c *userServiceClient) DeleteStudent(ctx context.Context, in *DeleteStudent
 
 func (c *userServiceClient) DeleteStudents(ctx context.Context, in *MultiStudentsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
 	out := new(OperationStatus)
-	err := c.cc.Invoke(ctx, "/users.UserService/DeleteStudents", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/DeleteStudents", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +118,7 @@ func (c *userServiceClient) DeleteStudents(ctx context.Context, in *MultiStudent
 
 func (c *userServiceClient) UpdateStudentOnlineStatus(ctx context.Context, in *UpdateStudentOnlineStatusRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
 	out := new(OperationStatus)
-	err := c.cc.Invoke(ctx, "/users.UserService/UpdateStudentOnlineStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/UpdateStudentOnlineStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +127,7 @@ func (c *userServiceClient) UpdateStudentOnlineStatus(ctx context.Context, in *U
 
 func (c *userServiceClient) StudentSignup(ctx context.Context, in *StudentSignupRequest, opts ...grpc.CallOption) (*StudentSignupResponse, error) {
 	out := new(StudentSignupResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/StudentSignup", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/StudentSignup", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +136,7 @@ func (c *userServiceClient) StudentSignup(ctx context.Context, in *StudentSignup
 
 func (c *userServiceClient) InviteTeacher(ctx context.Context, in *InviteTeacherRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
 	out := new(OperationStatus)
-	err := c.cc.Invoke(ctx, "/users.UserService/InviteTeacher", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/InviteTeacher", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,16 @@ func (c *userServiceClient) InviteTeacher(ctx context.Context, in *InviteTeacher
 
 func (c *userServiceClient) TeacherSignup(ctx context.Context, in *TeacherSignupRequest, opts ...grpc.CallOption) (*TeacherSignupResponse, error) {
 	out := new(TeacherSignupResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/TeacherSignup", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/TeacherSignup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) GetTeacherBySubject(ctx context.Context, in *GetTeacherBySubjectRequest, opts ...grpc.CallOption) (*Teachers, error) {
+	out := new(Teachers)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/GetTeacherBySubject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +163,7 @@ func (c *userServiceClient) TeacherSignup(ctx context.Context, in *TeacherSignup
 
 func (c *userServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.cc.Invoke(ctx, "/users.UserService/GetUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +172,7 @@ func (c *userServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opt
 
 func (c *userServiceClient) GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.cc.Invoke(ctx, "/users.UserService/GetUserByID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/GetUserByID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +181,7 @@ func (c *userServiceClient) GetUserByID(ctx context.Context, in *GetUserByIDRequ
 
 func (c *userServiceClient) ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error) {
 	out := new(ResetPasswordResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/ResetPassword", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/ResetPassword", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +190,7 @@ func (c *userServiceClient) ResetPassword(ctx context.Context, in *ResetPassword
 
 func (c *userServiceClient) PasswordResetLinkHealth(ctx context.Context, in *PasswordResetLinkHealthRequest, opts ...grpc.CallOption) (*PasswordResetLinkHealthResponse, error) {
 	out := new(PasswordResetLinkHealthResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/PasswordResetLinkHealth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/PasswordResetLinkHealth", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +199,7 @@ func (c *userServiceClient) PasswordResetLinkHealth(ctx context.Context, in *Pas
 
 func (c *userServiceClient) ChangePasswordByLink(ctx context.Context, in *PasswordChangeByLinkRequest, opts ...grpc.CallOption) (*PasswordChangeByLinkResponse, error) {
 	out := new(PasswordChangeByLinkResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/ChangePasswordByLink", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/ChangePasswordByLink", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +208,7 @@ func (c *userServiceClient) ChangePasswordByLink(ctx context.Context, in *Passwo
 
 func (c *userServiceClient) DoesEmailExist(ctx context.Context, in *DoesEmailExistRequest, opts ...grpc.CallOption) (*DoesEmailExistResponse, error) {
 	out := new(DoesEmailExistResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/DoesEmailExist", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/DoesEmailExist", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +217,7 @@ func (c *userServiceClient) DoesEmailExist(ctx context.Context, in *DoesEmailExi
 
 func (c *userServiceClient) DoesUserNameExist(ctx context.Context, in *DoesUserNameExistRequest, opts ...grpc.CallOption) (*DoesUserNameExistResponse, error) {
 	out := new(DoesUserNameExistResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/DoesUserNameExist", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/DoesUserNameExist", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +226,7 @@ func (c *userServiceClient) DoesUserNameExist(ctx context.Context, in *DoesUserN
 
 func (c *userServiceClient) IsSignupLinkValid(ctx context.Context, in *IsSignupLinkValidRequest, opts ...grpc.CallOption) (*IsSignupLinkValidResponse, error) {
 	out := new(IsSignupLinkValidResponse)
-	err := c.cc.Invoke(ctx, "/users.UserService/IsSignupLinkValid", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/IsSignupLinkValid", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +235,7 @@ func (c *userServiceClient) IsSignupLinkValid(ctx context.Context, in *IsSignupL
 
 func (c *userServiceClient) UserPasswordReset(ctx context.Context, in *UserPasswordResetRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
 	out := new(OperationStatus)
-	err := c.cc.Invoke(ctx, "/users.UserService/UserPasswordReset", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.users.UserService/UserPasswordReset", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -247,6 +257,7 @@ type UserServiceServer interface {
 	StudentSignup(context.Context, *StudentSignupRequest) (*StudentSignupResponse, error)
 	InviteTeacher(context.Context, *InviteTeacherRequest) (*OperationStatus, error)
 	TeacherSignup(context.Context, *TeacherSignupRequest) (*TeacherSignupResponse, error)
+	GetTeacherBySubject(context.Context, *GetTeacherBySubjectRequest) (*Teachers, error)
 	GetUser(context.Context, *GetUserRequest) (*User, error)
 	GetUserByID(context.Context, *GetUserByIDRequest) (*User, error)
 	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
@@ -295,6 +306,9 @@ func (UnimplementedUserServiceServer) InviteTeacher(context.Context, *InviteTeac
 }
 func (UnimplementedUserServiceServer) TeacherSignup(context.Context, *TeacherSignupRequest) (*TeacherSignupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TeacherSignup not implemented")
+}
+func (UnimplementedUserServiceServer) GetTeacherBySubject(context.Context, *GetTeacherBySubjectRequest) (*Teachers, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTeacherBySubject not implemented")
 }
 func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
@@ -346,7 +360,7 @@ func _UserService_GetStudents_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/GetStudents",
+		FullMethod: "/api.users.UserService/GetStudents",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetStudents(ctx, req.(*GetStudentRequest))
@@ -364,7 +378,7 @@ func _UserService_GetStudent_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/GetStudent",
+		FullMethod: "/api.users.UserService/GetStudent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetStudent(ctx, req.(*GetStudentRequest))
@@ -382,7 +396,7 @@ func _UserService_AddStudent_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/AddStudent",
+		FullMethod: "/api.users.UserService/AddStudent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).AddStudent(ctx, req.(*StudentAddRequest))
@@ -400,7 +414,7 @@ func _UserService_UpdateStudentStatus_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/UpdateStudentStatus",
+		FullMethod: "/api.users.UserService/UpdateStudentStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).UpdateStudentStatus(ctx, req.(*UpdateStudentStatusRequest))
@@ -418,7 +432,7 @@ func _UserService_UpdateStudent_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/UpdateStudent",
+		FullMethod: "/api.users.UserService/UpdateStudent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).UpdateStudent(ctx, req.(*StudentUpdateRequest))
@@ -436,7 +450,7 @@ func _UserService_DeleteStudent_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/DeleteStudent",
+		FullMethod: "/api.users.UserService/DeleteStudent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).DeleteStudent(ctx, req.(*DeleteStudentRequest))
@@ -454,7 +468,7 @@ func _UserService_DeleteStudents_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/DeleteStudents",
+		FullMethod: "/api.users.UserService/DeleteStudents",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).DeleteStudents(ctx, req.(*MultiStudentsDeleteRequest))
@@ -472,7 +486,7 @@ func _UserService_UpdateStudentOnlineStatus_Handler(srv interface{}, ctx context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/UpdateStudentOnlineStatus",
+		FullMethod: "/api.users.UserService/UpdateStudentOnlineStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).UpdateStudentOnlineStatus(ctx, req.(*UpdateStudentOnlineStatusRequest))
@@ -490,7 +504,7 @@ func _UserService_StudentSignup_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/StudentSignup",
+		FullMethod: "/api.users.UserService/StudentSignup",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).StudentSignup(ctx, req.(*StudentSignupRequest))
@@ -508,7 +522,7 @@ func _UserService_InviteTeacher_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/InviteTeacher",
+		FullMethod: "/api.users.UserService/InviteTeacher",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).InviteTeacher(ctx, req.(*InviteTeacherRequest))
@@ -526,10 +540,28 @@ func _UserService_TeacherSignup_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/TeacherSignup",
+		FullMethod: "/api.users.UserService/TeacherSignup",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).TeacherSignup(ctx, req.(*TeacherSignupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_GetTeacherBySubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTeacherBySubjectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetTeacherBySubject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.users.UserService/GetTeacherBySubject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetTeacherBySubject(ctx, req.(*GetTeacherBySubjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -544,7 +576,7 @@ func _UserService_GetUser_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/GetUser",
+		FullMethod: "/api.users.UserService/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetUser(ctx, req.(*GetUserRequest))
@@ -562,7 +594,7 @@ func _UserService_GetUserByID_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/GetUserByID",
+		FullMethod: "/api.users.UserService/GetUserByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetUserByID(ctx, req.(*GetUserByIDRequest))
@@ -580,7 +612,7 @@ func _UserService_ResetPassword_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/ResetPassword",
+		FullMethod: "/api.users.UserService/ResetPassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).ResetPassword(ctx, req.(*ResetPasswordRequest))
@@ -598,7 +630,7 @@ func _UserService_PasswordResetLinkHealth_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/PasswordResetLinkHealth",
+		FullMethod: "/api.users.UserService/PasswordResetLinkHealth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).PasswordResetLinkHealth(ctx, req.(*PasswordResetLinkHealthRequest))
@@ -616,7 +648,7 @@ func _UserService_ChangePasswordByLink_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/ChangePasswordByLink",
+		FullMethod: "/api.users.UserService/ChangePasswordByLink",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).ChangePasswordByLink(ctx, req.(*PasswordChangeByLinkRequest))
@@ -634,7 +666,7 @@ func _UserService_DoesEmailExist_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/DoesEmailExist",
+		FullMethod: "/api.users.UserService/DoesEmailExist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).DoesEmailExist(ctx, req.(*DoesEmailExistRequest))
@@ -652,7 +684,7 @@ func _UserService_DoesUserNameExist_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/DoesUserNameExist",
+		FullMethod: "/api.users.UserService/DoesUserNameExist",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).DoesUserNameExist(ctx, req.(*DoesUserNameExistRequest))
@@ -670,7 +702,7 @@ func _UserService_IsSignupLinkValid_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/IsSignupLinkValid",
+		FullMethod: "/api.users.UserService/IsSignupLinkValid",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).IsSignupLinkValid(ctx, req.(*IsSignupLinkValidRequest))
@@ -688,7 +720,7 @@ func _UserService_UserPasswordReset_Handler(srv interface{}, ctx context.Context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/users.UserService/UserPasswordReset",
+		FullMethod: "/api.users.UserService/UserPasswordReset",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).UserPasswordReset(ctx, req.(*UserPasswordResetRequest))
@@ -700,7 +732,7 @@ func _UserService_UserPasswordReset_Handler(srv interface{}, ctx context.Context
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "users.UserService",
+	ServiceName: "api.users.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -746,6 +778,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TeacherSignup",
 			Handler:    _UserService_TeacherSignup_Handler,
+		},
+		{
+			MethodName: "GetTeacherBySubject",
+			Handler:    _UserService_GetTeacherBySubject_Handler,
 		},
 		{
 			MethodName: "GetUser",

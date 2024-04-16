@@ -1,8 +1,8 @@
 syntax = "proto3";
 package orgs;
-option go_package = "./orgs";
+option go_package="github.com/les-cours/organization-service/api/orgs";
 
-
+import "api/users/user.proto";
 
 
 
@@ -29,6 +29,7 @@ message Department {
   string name = 2;
   string arabicName = 3;
   string  schools = 4;
+
 }
 message GetDepartmentsRequest{
   string schoolID = 1;  // الطور [school - middle -high ]
@@ -62,7 +63,10 @@ message Subject {
   string subjectID = 1;
   string name = 2;
   string arabicName = 3;
+  repeated Grad grads = 4;
+  repeated api.users.Teacher teachers = 5;
 }
+
 message GetSubjectsRequest{
   string gradID = 1;
 }
@@ -72,9 +76,10 @@ message GetSubjectRequest{
 }
 
 message SubjectAddRequest {
-  string subjectID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string name = 1;
+  string arabicName = 2;
+  repeated string gradsIDs = 3;
+  repeated string teachersIDs = 4;
 }
 
 message SubjectUpdateRequest {
@@ -87,6 +92,10 @@ message DeleteSubjectsRequest {
 }
 message MultiSubjectsDeleteRequest{
   repeated string subjectsIDs = 1;
+}
+
+message GetSubjectByGradRequest {
+  string gradID = 1;
 }
 
 
@@ -135,12 +144,13 @@ service OrgService {
   rpc DeleteDepartment(DeleteDepartmentsRequest) returns (OperationStatus) {}
   rpc DeleteDepartments(MultiDepartmentsDeleteRequest) returns (OperationStatus) {}
 
-  rpc GetSubjects(GetDepartmentRequest) returns (Subjects) {}
-  rpc GetSubject(GetDepartmentRequest) returns (Subject) {}
+  rpc GetSubjects(GetSubjectsRequest) returns (Subjects) {}
+  rpc GetSubject(GetSubjectRequest) returns (Subject) {}
   rpc AddSubject(SubjectAddRequest) returns (Subject) {}
-  rpc UpdateSubject(SubjectUpdateRequest) returns (OperationStatus) {}
+  rpc UpdateSubject(SubjectUpdateRequest) returns (Subject) {}
   rpc DeleteSubject(DeleteSubjectsRequest) returns (OperationStatus) {}
   rpc DeleteSubjects(MultiSubjectsDeleteRequest) returns (OperationStatus) {}
+  rpc GetSubjectsByGrad(GetSubjectByGradRequest) returns (Subjects) {}
 
 
 

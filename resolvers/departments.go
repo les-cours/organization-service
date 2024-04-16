@@ -43,23 +43,17 @@ WHERE schools = $1;`, in.GetSchoolID())
 
 func (s *Server) GetDepartment(ctx context.Context, in *orgs.GetDepartmentRequest) (*orgs.Department, error) {
 	var department *orgs.Department
-
-	var schools, name, arabicName string
+	department.DepartmentID = in.DepartmentID
 	err := s.DB.QueryRow(`
 SELECT 
     schools,name,arabic_name 
 from departments 
-WHERE department_id = $1;`, in.GetDepartmentID()).Scan(&schools, &name, &arabicName)
+WHERE department_id = $1;`, in.GetDepartmentID()).Scan(&department.Schools, &department.Name, &department.ArabicName)
 
 	if err != nil {
 		log.Println("err when query department")
 		return nil, err
 	}
-
-	department.DepartmentID = in.GetDepartmentID()
-	department.Name = name
-	department.ArabicName = arabicName
-	department.Schools = schools
 
 	return department, nil
 }
@@ -156,4 +150,9 @@ func (s *Server) DeleteDepartments(ctx context.Context, in *orgs.MultiDepartment
 	}
 
 	return &orgs.OperationStatus{Status: true}, nil
+}
+
+func (s *Server) existDepartment(depID string) bool {
+
+	return true
 }

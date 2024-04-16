@@ -3,12 +3,14 @@ module github.com/les-cours/organization-service
 go 1.21.5
 
 require (
+	github.com/golang/protobuf v1.5.4
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
 	github.com/prometheus/client_golang v1.19.0
 	github.com/spf13/viper v1.18.2
 	google.golang.org/grpc v1.63.2
 	google.golang.org/protobuf v1.33.0
+
 )
 
 require (

@@ -28,12 +28,13 @@ type OrgServiceClient interface {
 	UpdateDepartment(ctx context.Context, in *DepartmentUpdateRequest, opts ...grpc.CallOption) (*Department, error)
 	DeleteDepartment(ctx context.Context, in *DeleteDepartmentsRequest, opts ...grpc.CallOption) (*OperationStatus, error)
 	DeleteDepartments(ctx context.Context, in *MultiDepartmentsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
-	GetSubjects(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subjects, error)
-	GetSubject(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subject, error)
+	GetSubjects(ctx context.Context, in *GetSubjectsRequest, opts ...grpc.CallOption) (*Subjects, error)
+	GetSubject(ctx context.Context, in *GetSubjectRequest, opts ...grpc.CallOption) (*Subject, error)
 	AddSubject(ctx context.Context, in *SubjectAddRequest, opts ...grpc.CallOption) (*Subject, error)
-	UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*Subject, error)
 	DeleteSubject(ctx context.Context, in *DeleteSubjectsRequest, opts ...grpc.CallOption) (*OperationStatus, error)
 	DeleteSubjects(ctx context.Context, in *MultiSubjectsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	GetSubjectsByGrad(ctx context.Context, in *GetSubjectByGradRequest, opts ...grpc.CallOption) (*Subjects, error)
 	GetGrads(ctx context.Context, in *GetGradsRequest, opts ...grpc.CallOption) (*Grads, error)
 	GetGrad(ctx context.Context, in *GetGradRequest, opts ...grpc.CallOption) (*Grad, error)
 	AddGrad(ctx context.Context, in *GradAddRequest, opts ...grpc.CallOption) (*Grad, error)
@@ -104,7 +105,7 @@ func (c *orgServiceClient) DeleteDepartments(ctx context.Context, in *MultiDepar
 	return out, nil
 }
 
-func (c *orgServiceClient) GetSubjects(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subjects, error) {
+func (c *orgServiceClient) GetSubjects(ctx context.Context, in *GetSubjectsRequest, opts ...grpc.CallOption) (*Subjects, error) {
 	out := new(Subjects)
 	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSubjects", in, out, opts...)
 	if err != nil {
@@ -113,7 +114,7 @@ func (c *orgServiceClient) GetSubjects(ctx context.Context, in *GetDepartmentReq
 	return out, nil
 }
 
-func (c *orgServiceClient) GetSubject(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Subject, error) {
+func (c *orgServiceClient) GetSubject(ctx context.Context, in *GetSubjectRequest, opts ...grpc.CallOption) (*Subject, error) {
 	out := new(Subject)
 	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSubject", in, out, opts...)
 	if err != nil {
@@ -131,8 +132,8 @@ func (c *orgServiceClient) AddSubject(ctx context.Context, in *SubjectAddRequest
 	return out, nil
 }
 
-func (c *orgServiceClient) UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
-	out := new(OperationStatus)
+func (c *orgServiceClient) UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*Subject, error) {
+	out := new(Subject)
 	err := c.cc.Invoke(ctx, "/orgs.OrgService/UpdateSubject", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -152,6 +153,15 @@ func (c *orgServiceClient) DeleteSubject(ctx context.Context, in *DeleteSubjects
 func (c *orgServiceClient) DeleteSubjects(ctx context.Context, in *MultiSubjectsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error) {
 	out := new(OperationStatus)
 	err := c.cc.Invoke(ctx, "/orgs.OrgService/DeleteSubjects", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgServiceClient) GetSubjectsByGrad(ctx context.Context, in *GetSubjectByGradRequest, opts ...grpc.CallOption) (*Subjects, error) {
+	out := new(Subjects)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSubjectsByGrad", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -222,12 +232,13 @@ type OrgServiceServer interface {
 	UpdateDepartment(context.Context, *DepartmentUpdateRequest) (*Department, error)
 	DeleteDepartment(context.Context, *DeleteDepartmentsRequest) (*OperationStatus, error)
 	DeleteDepartments(context.Context, *MultiDepartmentsDeleteRequest) (*OperationStatus, error)
-	GetSubjects(context.Context, *GetDepartmentRequest) (*Subjects, error)
-	GetSubject(context.Context, *GetDepartmentRequest) (*Subject, error)
+	GetSubjects(context.Context, *GetSubjectsRequest) (*Subjects, error)
+	GetSubject(context.Context, *GetSubjectRequest) (*Subject, error)
 	AddSubject(context.Context, *SubjectAddRequest) (*Subject, error)
-	UpdateSubject(context.Context, *SubjectUpdateRequest) (*OperationStatus, error)
+	UpdateSubject(context.Context, *SubjectUpdateRequest) (*Subject, error)
 	DeleteSubject(context.Context, *DeleteSubjectsRequest) (*OperationStatus, error)
 	DeleteSubjects(context.Context, *MultiSubjectsDeleteRequest) (*OperationStatus, error)
+	GetSubjectsByGrad(context.Context, *GetSubjectByGradRequest) (*Subjects, error)
 	GetGrads(context.Context, *GetGradsRequest) (*Grads, error)
 	GetGrad(context.Context, *GetGradRequest) (*Grad, error)
 	AddGrad(context.Context, *GradAddRequest) (*Grad, error)
@@ -259,16 +270,16 @@ func (UnimplementedOrgServiceServer) DeleteDepartment(context.Context, *DeleteDe
 func (UnimplementedOrgServiceServer) DeleteDepartments(context.Context, *MultiDepartmentsDeleteRequest) (*OperationStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDepartments not implemented")
 }
-func (UnimplementedOrgServiceServer) GetSubjects(context.Context, *GetDepartmentRequest) (*Subjects, error) {
+func (UnimplementedOrgServiceServer) GetSubjects(context.Context, *GetSubjectsRequest) (*Subjects, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSubjects not implemented")
 }
-func (UnimplementedOrgServiceServer) GetSubject(context.Context, *GetDepartmentRequest) (*Subject, error) {
+func (UnimplementedOrgServiceServer) GetSubject(context.Context, *GetSubjectRequest) (*Subject, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSubject not implemented")
 }
 func (UnimplementedOrgServiceServer) AddSubject(context.Context, *SubjectAddRequest) (*Subject, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSubject not implemented")
 }
-func (UnimplementedOrgServiceServer) UpdateSubject(context.Context, *SubjectUpdateRequest) (*OperationStatus, error) {
+func (UnimplementedOrgServiceServer) UpdateSubject(context.Context, *SubjectUpdateRequest) (*Subject, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSubject not implemented")
 }
 func (UnimplementedOrgServiceServer) DeleteSubject(context.Context, *DeleteSubjectsRequest) (*OperationStatus, error) {
@@ -276,6 +287,9 @@ func (UnimplementedOrgServiceServer) DeleteSubject(context.Context, *DeleteSubje
 }
 func (UnimplementedOrgServiceServer) DeleteSubjects(context.Context, *MultiSubjectsDeleteRequest) (*OperationStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSubjects not implemented")
+}
+func (UnimplementedOrgServiceServer) GetSubjectsByGrad(context.Context, *GetSubjectByGradRequest) (*Subjects, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSubjectsByGrad not implemented")
 }
 func (UnimplementedOrgServiceServer) GetGrads(context.Context, *GetGradsRequest) (*Grads, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGrads not implemented")
@@ -417,7 +431,7 @@ func _OrgService_DeleteDepartments_Handler(srv interface{}, ctx context.Context,
 }
 
 func _OrgService_GetSubjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDepartmentRequest)
+	in := new(GetSubjectsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -429,13 +443,13 @@ func _OrgService_GetSubjects_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/orgs.OrgService/GetSubjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServiceServer).GetSubjects(ctx, req.(*GetDepartmentRequest))
+		return srv.(OrgServiceServer).GetSubjects(ctx, req.(*GetSubjectsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OrgService_GetSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDepartmentRequest)
+	in := new(GetSubjectRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -447,7 +461,7 @@ func _OrgService_GetSubject_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/orgs.OrgService/GetSubject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServiceServer).GetSubject(ctx, req.(*GetDepartmentRequest))
+		return srv.(OrgServiceServer).GetSubject(ctx, req.(*GetSubjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -520,6 +534,24 @@ func _OrgService_DeleteSubjects_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServiceServer).DeleteSubjects(ctx, req.(*MultiSubjectsDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrgService_GetSubjectsByGrad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSubjectByGradRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetSubjectsByGrad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetSubjectsByGrad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetSubjectsByGrad(ctx, req.(*GetSubjectByGradRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -686,6 +718,10 @@ var OrgService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSubjects",
 			Handler:    _OrgService_DeleteSubjects_Handler,
+		},
+		{
+			MethodName: "GetSubjectsByGrad",
+			Handler:    _OrgService_GetSubjectsByGrad_Handler,
 		},
 		{
 			MethodName: "GetGrads",
