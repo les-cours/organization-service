@@ -11,7 +11,7 @@ func (s *Server) GetGrads(ctx context.Context, in *orgs.GetGradsRequest) (*orgs.
 
 	rows, err := s.DB.Query(`
 SELECT 
-    g.grade_id,g.name,g.arabic_name 
+    g.grade_id,g.title,g.title_ar 
 from grades as g
 WHERE  department_id = $1;`, in.GetDepartmentID())
 
@@ -41,7 +41,7 @@ func (s *Server) GetGrad(ctx context.Context, in *orgs.GetGradRequest) (*orgs.Gr
 
 	err := s.DB.QueryRow(`
 SELECT 
-    name,arabic_name
+    title,title_ar
 from grades 
 WHERE grade_id = $1;`, in.GetGradID()).Scan(&grad.Name, &grad.ArabicName)
 
@@ -69,7 +69,7 @@ func (s *Server) AddGrad(ctx context.Context, in *orgs.GradAddRequest) (*orgs.Gr
 	}
 
 	stmt, err := tx.Prepare(`
-    INSERT INTO grades (grade_id, name, arabic_name,department_id)
+    INSERT INTO grades (grade_id, title, title_ar,department_id)
     VALUES ($1, $2, $3,$4)
   `)
 	if err != nil {
@@ -99,7 +99,7 @@ func (s *Server) AddGrad(ctx context.Context, in *orgs.GradAddRequest) (*orgs.Gr
 func (s *Server) UpdateGrad(ctx context.Context, in *orgs.GradUpdateRequest) (*orgs.Grad, error) {
 	stmt, err := s.DB.Prepare(`
     UPDATE grades
-    SET name = $1, arabic_name = $2
+    SET title = $1, title_ar = $2
     WHERE grade_id = $3;
   `)
 	if err != nil {

@@ -14,7 +14,7 @@ func (s *Server) GetSubjects(ctx context.Context, in *orgs.GetSubjectsRequest) (
 
 	rows, err := s.DB.Query(`
 SELECT 
-    s.subject_id,s.name,s.arabic_name 
+    s.subject_id,s.title,s.title_ar 
 from subjects as s INNER JOIN public.grades_subjects gs on s.subject_id = gs.subject_id
 WHERE grade_id = $1;`, in.GetGradID())
 
@@ -47,7 +47,7 @@ func (s *Server) GetSubject(ctx context.Context, in *orgs.GetSubjectRequest) (*o
 
 	err := s.DB.QueryRow(`
 SELECT 
-    name,arabic_name
+    title,title_ar
 from subjects 
 WHERE subject_id = $1;`, in.GetSubjectID()).Scan(&subject.Name, &subject.ArabicName)
 
@@ -61,7 +61,7 @@ WHERE subject_id = $1;`, in.GetSubjectID()).Scan(&subject.Name, &subject.ArabicN
 	//grads
 	rows, err = s.DB.Query(`
 SELECT 
-    g.grade_id, g.name,g.arabic_name 
+    g.grade_id, g.title,g.title_ar 
 FROM grades as g
     INNER JOIN 
     public.grades_subjects gs 
@@ -106,7 +106,7 @@ func (s *Server) AddSubject(ctx context.Context, in *orgs.SubjectAddRequest) (*o
 	}
 
 	stmt, err := tx.Prepare(`
-    INSERT INTO subjects (subject_id, name, arabic_name)
+    INSERT INTO subjects (subject_id, title, title_ar)
     VALUES ($1, $2, $3)
   `)
 	if err != nil {
@@ -138,7 +138,7 @@ func (s *Server) AddSubject(ctx context.Context, in *orgs.SubjectAddRequest) (*o
 	// add teachers to the subject
 
 	for _, teacherID := range in.TeachersIDs {
-		_, err = tx.Exec(`INSERT INTO teachers_subjects (subject_id, teacher_id) values ($1,$2)`, subjectID, teacherID)
+		_, err = tx.Exec(`INSERT INTO teacher_subjects (subject_id, teacher_id) values ($1,$2)`, subjectID, teacherID)
 		if err != nil {
 			tx.Rollback()
 			return nil, err
@@ -157,7 +157,7 @@ func (s *Server) AddSubject(ctx context.Context, in *orgs.SubjectAddRequest) (*o
 func (s *Server) UpdateSubject(ctx context.Context, in *orgs.SubjectUpdateRequest) (*orgs.Subject, error) {
 	stmt, err := s.DB.Prepare(`
     UPDATE subjects
-    SET name = $1, arabic_name = $2
+    SET title = $1, title_ar = $2
     WHERE subject_id = $3;
   `)
 	if err != nil {
@@ -228,7 +228,7 @@ func (s *Server) DeleteSubjects(ctx context.Context, in *orgs.MultiSubjectsDelet
 func (s *Server) GetSubjectsByGrad(ctx context.Context, in *orgs.GetSubjectByGradRequest) (*orgs.Subjects, error) {
 
 	rows, err := s.DB.Query(`
-select s.name , s.arabic_name 
+select s.title , s.title_ar 
 from subjects as s 
     inner join public.grades_subjects gs on s.subject_id = gs.subject_id
     where grade_id = $1;

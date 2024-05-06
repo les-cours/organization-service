@@ -12,7 +12,7 @@ func (s *Server) GetDepartments(ctx context.Context, in *orgs.GetDepartmentsRequ
 
 	rows, err := s.DB.Query(`
 SELECT 
-    department_id,name,arabic_name 
+    department_id,title,title_ar 
 from departments 
 WHERE schools = $1;`, in.GetSchoolID())
 
@@ -23,16 +23,16 @@ WHERE schools = $1;`, in.GetSchoolID())
 
 	var departments *orgs.Departments
 
-	var departmentID, name, arabicName string
+	var departmentID, title, arabicName string
 	for rows.Next() {
-		err = rows.Scan(&departmentID, &name, &arabicName)
+		err = rows.Scan(&departmentID, &title, &arabicName)
 		if err != nil {
 			log.Println("err when scan departments")
 			return nil, err
 		}
 		departments.Departments = append(departments.Departments, &orgs.Department{
 			DepartmentID: departmentID,
-			Name:         name,
+			Name:         title,
 			ArabicName:   arabicName,
 			Schools:      in.GetSchoolID(),
 		})
@@ -46,7 +46,7 @@ func (s *Server) GetDepartment(ctx context.Context, in *orgs.GetDepartmentReques
 	department.DepartmentID = in.DepartmentID
 	err := s.DB.QueryRow(`
 SELECT 
-    schools,name,arabic_name 
+    schools,title,title_ar 
 from departments 
 WHERE department_id = $1;`, in.GetDepartmentID()).Scan(&department.Schools, &department.Name, &department.ArabicName)
 
@@ -60,7 +60,7 @@ WHERE department_id = $1;`, in.GetDepartmentID()).Scan(&department.Schools, &dep
 
 func (s *Server) AddDepartment(ctx context.Context, in *orgs.DepartmentAddRequest) (*orgs.Department, error) {
 	stmt, err := s.DB.Prepare(`
-    INSERT INTO departments (department_id, name, arabic_name, schools)
+    INSERT INTO departments (department_id, title, title_ar, schools)
     VALUES ($1, $2, $3,$4)
     RETURNING department_id;
   `)
@@ -84,7 +84,7 @@ func (s *Server) AddDepartment(ctx context.Context, in *orgs.DepartmentAddReques
 func (s *Server) UpdateDepartment(ctx context.Context, in *orgs.DepartmentUpdateRequest) (*orgs.Department, error) {
 	stmt, err := s.DB.Prepare(`
     UPDATE departments
-    SET name = $1, arabic_name = $2
+    SET title = $1, title_ar = $2
     WHERE department_id = $3;
   `)
 	if err != nil {
