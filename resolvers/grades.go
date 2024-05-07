@@ -16,19 +16,27 @@ from grades as g
 WHERE  department_id = $1;`, in.GetDepartmentID())
 
 	if err != nil {
-		log.Println("err when query grads")
+		s.Logger.Error(err.Error())
 		return nil, err
 	}
 
-	var grads *orgs.Grads
+	grads := &orgs.Grads{}
 
-	var grad *orgs.Grad
 	for rows.Next() {
-		err = rows.Scan(&grad.GradID, &grad.Name, &grad.ArabicName)
+		grad := &orgs.Grad{}
+		err = rows.Scan(&grad.GradID, &grad.Title, &grad.ArabicTitle)
 		if err != nil {
-			log.Println("err when scan grads")
+			s.Logger.Error(err.Error())
 			return nil, err
 		}
+		subjects, err := s.GetSubjectsByGrad(ctx, &orgs.IDRequest{
+			Id: grad.GradID,
+		})
+		if err != nil {
+			s.Logger.Error(err.Error())
+			return nil, ErrInternal
+		}
+		grad.Subjects = subjects
 		grads.Grads = append(grads.Grads, grad)
 	}
 	return grads, nil
@@ -43,11 +51,11 @@ func (s *Server) GetGrad(ctx context.Context, in *orgs.GetGradRequest) (*orgs.Gr
 SELECT 
     title,title_ar
 from grades 
-WHERE grade_id = $1;`, in.GetGradID()).Scan(&grad.Name, &grad.ArabicName)
+WHERE grade_id = $1;`, in.GetGradID()).Scan(&grad.Title, &grad.ArabicTitle)
 
 	if err != nil {
-		log.Println("err when query grad")
-		return nil, err
+		s.Logger.Error(err.Error())
+		return nil, ErrInternal
 	}
 
 	return grad, nil
@@ -80,7 +88,7 @@ func (s *Server) AddGrad(ctx context.Context, in *orgs.GradAddRequest) (*orgs.Gr
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(gradID, in.Name, in.ArabicName, in.DepartmentID)
+	_, err = stmt.Exec(gradID, in.Title, in.ArabicTitle, in.DepartmentID)
 	if err != nil {
 		tx.Rollback()
 		log.Println("error creating grad:", err)
@@ -108,7 +116,7 @@ func (s *Server) UpdateGrad(ctx context.Context, in *orgs.GradUpdateRequest) (*o
 	}
 	defer stmt.Close() // Ensure statement is closed even on errors
 
-	_, err = stmt.Exec(in.Name, in.ArabicName, in.GradID)
+	_, err = stmt.Exec(in.Title, in.ArabicTitle, in.GradID)
 	if err != nil {
 		log.Println("error updating grad:", err)
 		return nil, err

@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrgServiceClient interface {
+	GetSchool(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*Departments, error)
 	GetDepartments(ctx context.Context, in *GetDepartmentsRequest, opts ...grpc.CallOption) (*Departments, error)
 	GetDepartment(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*Department, error)
 	AddDepartment(ctx context.Context, in *DepartmentAddRequest, opts ...grpc.CallOption) (*Department, error)
@@ -34,7 +35,7 @@ type OrgServiceClient interface {
 	UpdateSubject(ctx context.Context, in *SubjectUpdateRequest, opts ...grpc.CallOption) (*Subject, error)
 	DeleteSubject(ctx context.Context, in *DeleteSubjectsRequest, opts ...grpc.CallOption) (*OperationStatus, error)
 	DeleteSubjects(ctx context.Context, in *MultiSubjectsDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
-	GetSubjectsByGrad(ctx context.Context, in *GetSubjectByGradRequest, opts ...grpc.CallOption) (*Subjects, error)
+	GetSubjectsByGrad(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*Subjects, error)
 	GetGrads(ctx context.Context, in *GetGradsRequest, opts ...grpc.CallOption) (*Grads, error)
 	GetGrad(ctx context.Context, in *GetGradRequest, opts ...grpc.CallOption) (*Grad, error)
 	AddGrad(ctx context.Context, in *GradAddRequest, opts ...grpc.CallOption) (*Grad, error)
@@ -49,6 +50,15 @@ type orgServiceClient struct {
 
 func NewOrgServiceClient(cc grpc.ClientConnInterface) OrgServiceClient {
 	return &orgServiceClient{cc}
+}
+
+func (c *orgServiceClient) GetSchool(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*Departments, error) {
+	out := new(Departments)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSchool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *orgServiceClient) GetDepartments(ctx context.Context, in *GetDepartmentsRequest, opts ...grpc.CallOption) (*Departments, error) {
@@ -159,7 +169,7 @@ func (c *orgServiceClient) DeleteSubjects(ctx context.Context, in *MultiSubjects
 	return out, nil
 }
 
-func (c *orgServiceClient) GetSubjectsByGrad(ctx context.Context, in *GetSubjectByGradRequest, opts ...grpc.CallOption) (*Subjects, error) {
+func (c *orgServiceClient) GetSubjectsByGrad(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*Subjects, error) {
 	out := new(Subjects)
 	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetSubjectsByGrad", in, out, opts...)
 	if err != nil {
@@ -226,6 +236,7 @@ func (c *orgServiceClient) DeleteGrads(ctx context.Context, in *MultiGradDeleteR
 // All implementations must embed UnimplementedOrgServiceServer
 // for forward compatibility
 type OrgServiceServer interface {
+	GetSchool(context.Context, *IDRequest) (*Departments, error)
 	GetDepartments(context.Context, *GetDepartmentsRequest) (*Departments, error)
 	GetDepartment(context.Context, *GetDepartmentRequest) (*Department, error)
 	AddDepartment(context.Context, *DepartmentAddRequest) (*Department, error)
@@ -238,7 +249,7 @@ type OrgServiceServer interface {
 	UpdateSubject(context.Context, *SubjectUpdateRequest) (*Subject, error)
 	DeleteSubject(context.Context, *DeleteSubjectsRequest) (*OperationStatus, error)
 	DeleteSubjects(context.Context, *MultiSubjectsDeleteRequest) (*OperationStatus, error)
-	GetSubjectsByGrad(context.Context, *GetSubjectByGradRequest) (*Subjects, error)
+	GetSubjectsByGrad(context.Context, *IDRequest) (*Subjects, error)
 	GetGrads(context.Context, *GetGradsRequest) (*Grads, error)
 	GetGrad(context.Context, *GetGradRequest) (*Grad, error)
 	AddGrad(context.Context, *GradAddRequest) (*Grad, error)
@@ -252,6 +263,9 @@ type OrgServiceServer interface {
 type UnimplementedOrgServiceServer struct {
 }
 
+func (UnimplementedOrgServiceServer) GetSchool(context.Context, *IDRequest) (*Departments, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSchool not implemented")
+}
 func (UnimplementedOrgServiceServer) GetDepartments(context.Context, *GetDepartmentsRequest) (*Departments, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDepartments not implemented")
 }
@@ -288,7 +302,7 @@ func (UnimplementedOrgServiceServer) DeleteSubject(context.Context, *DeleteSubje
 func (UnimplementedOrgServiceServer) DeleteSubjects(context.Context, *MultiSubjectsDeleteRequest) (*OperationStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSubjects not implemented")
 }
-func (UnimplementedOrgServiceServer) GetSubjectsByGrad(context.Context, *GetSubjectByGradRequest) (*Subjects, error) {
+func (UnimplementedOrgServiceServer) GetSubjectsByGrad(context.Context, *IDRequest) (*Subjects, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSubjectsByGrad not implemented")
 }
 func (UnimplementedOrgServiceServer) GetGrads(context.Context, *GetGradsRequest) (*Grads, error) {
@@ -320,6 +334,24 @@ type UnsafeOrgServiceServer interface {
 
 func RegisterOrgServiceServer(s grpc.ServiceRegistrar, srv OrgServiceServer) {
 	s.RegisterService(&OrgService_ServiceDesc, srv)
+}
+
+func _OrgService_GetSchool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetSchool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetSchool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetSchool(ctx, req.(*IDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _OrgService_GetDepartments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -539,7 +571,7 @@ func _OrgService_DeleteSubjects_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _OrgService_GetSubjectsByGrad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSubjectByGradRequest)
+	in := new(IDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -551,7 +583,7 @@ func _OrgService_GetSubjectsByGrad_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/orgs.OrgService/GetSubjectsByGrad",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServiceServer).GetSubjectsByGrad(ctx, req.(*GetSubjectByGradRequest))
+		return srv.(OrgServiceServer).GetSubjectsByGrad(ctx, req.(*IDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -671,6 +703,10 @@ var OrgService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "orgs.OrgService",
 	HandlerType: (*OrgServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetSchool",
+			Handler:    _OrgService_GetSchool_Handler,
+		},
 		{
 			MethodName: "GetDepartments",
 			Handler:    _OrgService_GetDepartments_Handler,

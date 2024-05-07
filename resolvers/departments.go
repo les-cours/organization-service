@@ -23,17 +23,17 @@ WHERE schools = $1;`, in.GetSchoolID())
 
 	var departments *orgs.Departments
 
-	var departmentID, title, arabicName string
+	var departmentID, title, arabicTitle string
 	for rows.Next() {
-		err = rows.Scan(&departmentID, &title, &arabicName)
+		err = rows.Scan(&departmentID, &title, &arabicTitle)
 		if err != nil {
 			log.Println("err when scan departments")
 			return nil, err
 		}
 		departments.Departments = append(departments.Departments, &orgs.Department{
 			DepartmentID: departmentID,
-			Name:         title,
-			ArabicName:   arabicName,
+			Title:        title,
+			ArabicTitle:  arabicTitle,
 			Schools:      in.GetSchoolID(),
 		})
 
@@ -48,7 +48,7 @@ func (s *Server) GetDepartment(ctx context.Context, in *orgs.GetDepartmentReques
 SELECT 
     schools,title,title_ar 
 from departments 
-WHERE department_id = $1;`, in.GetDepartmentID()).Scan(&department.Schools, &department.Name, &department.ArabicName)
+WHERE department_id = $1;`, in.GetDepartmentID()).Scan(&department.Schools, &department.Title, &department.ArabicTitle)
 
 	if err != nil {
 		log.Println("err when query department")
@@ -71,7 +71,7 @@ func (s *Server) AddDepartment(ctx context.Context, in *orgs.DepartmentAddReques
 	defer stmt.Close() // Ensure statement is closed even on errors
 
 	var newDepartment *orgs.Department
-	err = stmt.QueryRow(utils.GenerateUUIDString(), in.Name, in.ArabicName, in.Schools).Scan(&newDepartment)
+	err = stmt.QueryRow(utils.GenerateUUIDString(), in.Title, in.ArabicTitle, in.Schools).Scan(&newDepartment)
 	if err != nil {
 		log.Println("error creating department:", err)
 		return nil, err
@@ -93,7 +93,7 @@ func (s *Server) UpdateDepartment(ctx context.Context, in *orgs.DepartmentUpdate
 	}
 	defer stmt.Close() // Ensure statement is closed even on errors
 
-	_, err = stmt.Exec(in.Name, in.ArabicName, in.DepartmentID)
+	_, err = stmt.Exec(in.Title, in.ArabicTitle, in.DepartmentID)
 	if err != nil {
 		log.Println("error updating department:", err)
 		return nil, err

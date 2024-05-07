@@ -19,15 +19,15 @@ from subjects as s INNER JOIN public.grades_subjects gs on s.subject_id = gs.sub
 WHERE grade_id = $1;`, in.GetGradID())
 
 	if err != nil {
-		log.Println("err whene query subjects")
-		return nil, err
+		s.Logger.Error(err.Error())
+		return nil, ErrInternal
 	}
 
 	var subjects *orgs.Subjects
 
 	var subject *orgs.Subject
 	for rows.Next() {
-		err = rows.Scan(&subject.SubjectID, &subject.Name, &subject.ArabicName)
+		err = rows.Scan(&subject.SubjectID, &subject.Title, &subject.ArabicTitle)
 		if err != nil {
 			log.Println("err when scan subjects")
 			return nil, err
@@ -49,7 +49,7 @@ func (s *Server) GetSubject(ctx context.Context, in *orgs.GetSubjectRequest) (*o
 SELECT 
     title,title_ar
 from subjects 
-WHERE subject_id = $1;`, in.GetSubjectID()).Scan(&subject.Name, &subject.ArabicName)
+WHERE subject_id = $1;`, in.GetSubjectID()).Scan(&subject.Title, &subject.ArabicTitle)
 
 	if err != nil {
 		log.Println("err when query subject")
@@ -71,7 +71,7 @@ WHERE gs.subject_id = $1;
 
 	var grad *orgs.Grad
 	for rows.Next() {
-		err = rows.Scan(&grad.GradID, &grad.Name, &grad.ArabicName)
+		err = rows.Scan(&grad.GradID, &grad.Title, &grad.ArabicTitle)
 		if err != nil {
 			return nil, err
 		}
@@ -117,7 +117,7 @@ func (s *Server) AddSubject(ctx context.Context, in *orgs.SubjectAddRequest) (*o
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(subjectID, in.Name, in.ArabicName)
+	_, err = stmt.Exec(subjectID, in.Title, in.ArabicTitle)
 	if err != nil {
 		tx.Rollback()
 		log.Println("error creating subject:", err)
@@ -166,7 +166,7 @@ func (s *Server) UpdateSubject(ctx context.Context, in *orgs.SubjectUpdateReques
 	}
 	defer stmt.Close() // Ensure statement is closed even on errors
 
-	_, err = stmt.Exec(in.Name, in.ArabicName, in.SubjectID)
+	_, err = stmt.Exec(in.Title, in.ArabicTitle, in.SubjectID)
 	if err != nil {
 		log.Println("error updating subject:", err)
 		return nil, err
@@ -225,30 +225,30 @@ func (s *Server) DeleteSubjects(ctx context.Context, in *orgs.MultiSubjectsDelet
 	return &orgs.OperationStatus{Status: true}, nil
 }
 
-func (s *Server) GetSubjectsByGrad(ctx context.Context, in *orgs.GetSubjectByGradRequest) (*orgs.Subjects, error) {
+func (s *Server) GetSubjectsByGrad(ctx context.Context, in *orgs.IDRequest) (*orgs.Subjects, error) {
 
 	rows, err := s.DB.Query(`
-select s.title , s.title_ar 
-from subjects as s 
-    inner join public.grades_subjects gs on s.subject_id = gs.subject_id
-    where grade_id = $1;
-    `, in.GetGradID())
+SELECT subjects.subject_id, subjects.title , subjects.title_ar 
+from subjects
+    INNER JOIN  grades_subjects gs on subjects.subject_id = gs.subject_id
+    WHERE gs.grade_id = $1;
+    `, in.Id)
 
 	if err != nil {
-		return nil, err
+		s.Logger.Error(err.Error())
+		return nil, ErrInternal
 	}
 
-	var subject *orgs.Subject
-	var subjects []*orgs.Subject
+	subjects := &orgs.Subjects{}
 	for rows.Next() {
-		err = rows.Scan(&subject.Name, &subject.ArabicName)
+		subject := &orgs.Subject{}
+		err = rows.Scan(&subject.SubjectID, &subject.Title, &subject.ArabicTitle)
 		if err != nil {
-			return nil, err
+			s.Logger.Error(err.Error())
+			return nil, ErrInternal
 		}
-		subjects = append(subjects, subject)
+		subjects.Subjects = append(subjects.Subjects, subject)
 	}
 
-	return &orgs.Subjects{Subjects: subjects}, nil
+	return subjects, nil
 }
-
-// GetSubjectsByGrad

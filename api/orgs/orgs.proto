@@ -11,11 +11,18 @@ message Empty {}
 
 //intituations
 
+
+message IDRequest {
+  string id = 1;
+  string userID = 2;
+}
+
 enum SCHOOLS {
   school = 0;
   middle = 1;
   high = 2;
 }
+
 
 /*
     DEPARTMENTS
@@ -26,10 +33,12 @@ message Departments {
 }
 message Department {
   string departmentID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
   string  schools = 4;
-
+  string description = 5;
+  string  description_ar = 6;
+  Grads grades = 7;
 }
 message GetDepartmentsRequest{
   string schoolID = 1;  // الطور [school - middle -high ]
@@ -39,14 +48,14 @@ message GetDepartmentRequest{
 }
 message DepartmentAddRequest {
   string departmentID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
   string  schools = 4;
 }
 message DepartmentUpdateRequest {
   string departmentID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
 }
 message DeleteDepartmentsRequest {
   string departmentID = 1;
@@ -61,11 +70,12 @@ message Subjects {
 
 message Subject {
   string subjectID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
   repeated Grad grads = 4;
   repeated api.users.Teacher teachers = 5;
 }
+
 
 message GetSubjectsRequest{
   string gradID = 1;
@@ -76,16 +86,16 @@ message GetSubjectRequest{
 }
 
 message SubjectAddRequest {
-  string name = 1;
-  string arabicName = 2;
+  string title = 1;
+  string arabicTitle = 2;
   repeated string gradsIDs = 3;
   repeated string teachersIDs = 4;
 }
 
 message SubjectUpdateRequest {
   string subjectID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
 }
 message DeleteSubjectsRequest {
   string subjectID = 1;
@@ -104,8 +114,9 @@ message Grads {
 }
 message Grad {
   string gradID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
+  Subjects subjects = 4;
 }
 message GetGradsRequest{
   string departmentID = 1;
@@ -115,14 +126,14 @@ message GetGradRequest{
 }
 message GradAddRequest {
   string gradID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
   string  departmentID = 4;
 }
 message GradUpdateRequest {
   string gradID = 1;
-  string name = 2;
-  string arabicName = 3;
+  string title = 2;
+  string arabicTitle = 3;
 }
 message DeleteGradRequest {
   string gradID = 1;
@@ -137,6 +148,8 @@ message OperationStatus {
 }
 
 service OrgService {
+
+  rpc GetSchool(IDRequest) returns (Departments){}
   rpc GetDepartments(GetDepartmentsRequest) returns (Departments) {}
   rpc GetDepartment(GetDepartmentRequest) returns (Department) {}
   rpc AddDepartment(DepartmentAddRequest) returns (Department) {}
@@ -150,7 +163,7 @@ service OrgService {
   rpc UpdateSubject(SubjectUpdateRequest) returns (Subject) {}
   rpc DeleteSubject(DeleteSubjectsRequest) returns (OperationStatus) {}
   rpc DeleteSubjects(MultiSubjectsDeleteRequest) returns (OperationStatus) {}
-  rpc GetSubjectsByGrad(GetSubjectByGradRequest) returns (Subjects) {}
+  rpc GetSubjectsByGrad(IDRequest) returns (Subjects) {}
 
 
 
