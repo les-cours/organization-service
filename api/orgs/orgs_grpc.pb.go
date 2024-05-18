@@ -42,6 +42,7 @@ type OrgServiceClient interface {
 	UpdateGrad(ctx context.Context, in *GradUpdateRequest, opts ...grpc.CallOption) (*Grad, error)
 	DeleteGrad(ctx context.Context, in *DeleteGradRequest, opts ...grpc.CallOption) (*OperationStatus, error)
 	DeleteGrads(ctx context.Context, in *MultiGradDeleteRequest, opts ...grpc.CallOption) (*OperationStatus, error)
+	GetCities(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Cities, error)
 }
 
 type orgServiceClient struct {
@@ -232,6 +233,15 @@ func (c *orgServiceClient) DeleteGrads(ctx context.Context, in *MultiGradDeleteR
 	return out, nil
 }
 
+func (c *orgServiceClient) GetCities(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Cities, error) {
+	out := new(Cities)
+	err := c.cc.Invoke(ctx, "/orgs.OrgService/GetCities", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServiceServer is the server API for OrgService service.
 // All implementations must embed UnimplementedOrgServiceServer
 // for forward compatibility
@@ -256,6 +266,7 @@ type OrgServiceServer interface {
 	UpdateGrad(context.Context, *GradUpdateRequest) (*Grad, error)
 	DeleteGrad(context.Context, *DeleteGradRequest) (*OperationStatus, error)
 	DeleteGrads(context.Context, *MultiGradDeleteRequest) (*OperationStatus, error)
+	GetCities(context.Context, *Empty) (*Cities, error)
 	mustEmbedUnimplementedOrgServiceServer()
 }
 
@@ -322,6 +333,9 @@ func (UnimplementedOrgServiceServer) DeleteGrad(context.Context, *DeleteGradRequ
 }
 func (UnimplementedOrgServiceServer) DeleteGrads(context.Context, *MultiGradDeleteRequest) (*OperationStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteGrads not implemented")
+}
+func (UnimplementedOrgServiceServer) GetCities(context.Context, *Empty) (*Cities, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCities not implemented")
 }
 func (UnimplementedOrgServiceServer) mustEmbedUnimplementedOrgServiceServer() {}
 
@@ -696,6 +710,24 @@ func _OrgService_DeleteGrads_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrgService_GetCities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServiceServer).GetCities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/orgs.OrgService/GetCities",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServiceServer).GetCities(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrgService_ServiceDesc is the grpc.ServiceDesc for OrgService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -782,6 +814,10 @@ var OrgService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteGrads",
 			Handler:    _OrgService_DeleteGrads_Handler,
+		},
+		{
+			MethodName: "GetCities",
+			Handler:    _OrgService_GetCities_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

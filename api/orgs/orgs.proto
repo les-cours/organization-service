@@ -147,6 +147,15 @@ message OperationStatus {
   bool status = 1;
 }
 
+message Cities {
+  repeated City cities = 1;
+}
+
+message City {
+  int32 id = 1;
+  string arabicName = 2;
+  string name = 3;
+}
 service OrgService {
 
   rpc GetSchool(IDRequest) returns (Departments){}
@@ -174,6 +183,7 @@ service OrgService {
   rpc DeleteGrad(DeleteGradRequest) returns (OperationStatus) {}
   rpc DeleteGrads(MultiGradDeleteRequest) returns (OperationStatus) {}
 
+  rpc GetCities(Empty) returns (Cities) {}
 
 
 }
