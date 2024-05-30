@@ -23,7 +23,7 @@ WHERE grade_id = $1;`, in.GetGradID())
 		return nil, ErrInternal
 	}
 
-	var subjects *orgs.Subjects
+	var subjects = new(orgs.Subjects)
 
 	var subject *orgs.Subject
 	for rows.Next() {
@@ -236,10 +236,13 @@ from subjects
 
 	if err != nil {
 		s.Logger.Error(err.Error())
+		if !errors.Is(err, sql.ErrNoRows) {
+			return nil, ErrNotFound("subjects")
+		}
 		return nil, ErrInternal
 	}
 
-	subjects := &orgs.Subjects{}
+	var subjects = new(orgs.Subjects)
 	for rows.Next() {
 		subject := &orgs.Subject{}
 		err = rows.Scan(&subject.SubjectID, &subject.Title, &subject.ArabicTitle)
